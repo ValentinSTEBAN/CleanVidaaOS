@@ -13,7 +13,6 @@
             background: radial-gradient(circle at 15% 15%, #2a1f1b 0%, #121015 45%, #08080a 100%);
         }
 
-        /* TV Focus Animations & Visual Highlights */
         .focusable {
             transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), 
                         box-shadow 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
@@ -33,7 +32,6 @@
             aspect-ratio: 16 / 9;
         }
 
-        /* Custom SVG & Icon Helpers */
         .glass-panel {
             background: rgba(255, 255, 255, 0.06);
             backdrop-filter: blur(12px);
@@ -43,10 +41,8 @@
 </head>
 <body class="h-screen w-screen flex flex-col justify-between p-10 md:p-14 lg:p-16 relative overflow-hidden">
 
-    <!-- Ambient Top-Left Warm Glow (matching screenshot atmosphere) -->
     <div class="absolute -top-32 -left-32 w-96 h-96 bg-amber-900/20 rounded-full blur-3xl pointer-events-none"></div>
 
-    <!-- Header: Clock, Day & Date -->
     <header class="relative z-10 flex flex-col items-start pt-2">
         <div id="date-display" class="text-gray-300 text-xl md:text-2xl font-medium tracking-wide mb-1 opacity-90">
             --
@@ -56,42 +52,35 @@
         </div>
     </header>
 
-    <!-- Main Content Grid / Rows -->
     <main class="relative z-10 flex flex-col justify-end gap-8 mb-4">
         
-        <!-- Row 1: Primary Streaming Applications -->
         <section class="flex flex-col gap-3">
             <div id="row-apps" class="grid grid-cols-5 gap-4 md:gap-6 items-center max-w-6xl">
                 
-                <!-- YouTube -->
                 <div class="focusable app-card rounded-2xl bg-black overflow-hidden flex items-center justify-center cursor-pointer border-2 border-transparent shadow-md relative group"
                      tabindex="0" data-row="0" data-col="0" data-title="YouTube" data-url="https://www.youtube.com/tv">
                     <img src="https://www.gstatic.com/marketing-cms/assets/images/96/ff/14b02dc0467e8875e062e9565cbd/external-icon-core-1.png=n-w1860-h1047-fcrop64=1,00000000ffffffff-rw" 
                          alt="YouTube" class="w-full h-full object-cover">
                 </div>
 
-                <!-- Netflix -->
                 <div class="focusable app-card rounded-2xl bg-black overflow-hidden flex items-center justify-center cursor-pointer border-2 border-transparent shadow-md relative group"
                      tabindex="0" data-row="0" data-col="1" data-title="Netflix" data-url="https://www.netflix.com">
                     <img src="https://images.ctfassets.net/y2ske730sjqp/5QQ9SVIdc1tmkqrtFnG9U1/de758bba0f65dcc1c6bc1f31f161003d/BrandAssets_Logos_02-NSymbol.jpg?w=940" 
                          alt="Netflix" class="w-full h-full object-cover">
                 </div>
 
-                <!-- Prime Video -->
                 <div class="focusable app-card rounded-2xl bg-black overflow-hidden flex items-center justify-center cursor-pointer border-2 border-transparent shadow-md relative group"
                      tabindex="0" data-row="0" data-col="2" data-title="Prime Video" data-url="https://www.primevideo.com">
                     <img src="https://m.media-amazon.com/images/I/31W9hs7w0JL.png" 
                          alt="Prime Video" class="w-full h-full object-cover">
                 </div>
 
-                <!-- Disney+ -->
                 <div class="focusable app-card rounded-2xl bg-black overflow-hidden flex items-center justify-center cursor-pointer border-2 border-transparent shadow-md relative group"
                      tabindex="0" data-row="0" data-col="3" data-title="Disney+" data-url="https://www.disneyplus.com">
                     <img src="https://store-images.s-microsoft.com/image/apps.14187.14495311847124170.7646206e-bd82-4cf0-8b8c-d06a67bc302c.2e474878-acb7-4afb-a503-c2a1a32feaa8" 
                          alt="Disney+" class="w-full h-full object-cover">
                 </div>
 
-                <!-- Plex -->
                 <div class="focusable app-card rounded-2xl bg-black overflow-hidden flex items-center justify-center cursor-pointer border-2 border-transparent shadow-md relative group"
                      tabindex="0" data-row="0" data-col="4" data-title="Plex" data-url="https://app.plex.tv">
                     <img src="https://play-lh.googleusercontent.com/LvoJ7BgEMJIHtdufYrq6Qg2DAXPuNqJrYvv_Uow-9HLqBW9QZ_gE23qPJtoNfEKEwTIg8efVEg4m5PFVyxjOCQM" 
@@ -100,7 +89,6 @@
 
             </div>
 
-            <!-- Active App Label Indicator -->
             <div class="h-6 pl-2">
                 <span id="active-app-label" class="text-gray-300 text-sm md:text-base font-medium tracking-wide transition-opacity duration-200">
                     YouTube
@@ -110,28 +98,22 @@
 
     </main>
 
-    <!-- Modal Notification Overlay for Feedback (replaces alerts) -->
     <div id="toast" class="fixed top-8 right-8 bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-3 rounded-xl shadow-2xl opacity-0 transition-opacity duration-300 pointer-events-none flex items-center gap-3">
         <div id="toast-icon" class="w-3 h-3 rounded-full bg-emerald-400"></div>
         <span id="toast-message" class="text-sm font-medium">Lancement de l'application...</span>
     </div>
 
-    <!-- Clock & Navigation Engine Script -->
     <script>
-        // --- 1. Dynamic Date & Time engine based on Browser Locale ---
         function updateClock() {
             const now = new Date();
             const locale = navigator.language || 'fr-FR';
 
-            // Time Formatting (HH:MM / 12h or 24h depending on locale)
             const timeOptions = { hour: 'numeric', minute: '2-digit', hour12: false };
             document.getElementById('time-display').textContent = now.toLocaleTimeString(locale, timeOptions);
 
-            // Date Formatting (e.g. Sunday, 18 October / Dimanche 18 Octobre)
             const dateOptions = { weekday: 'long', day: 'numeric', month: 'long' };
             let formattedDate = now.toLocaleDateString(locale, dateOptions);
             
-            // Capitalize first letter of weekday
             formattedDate = formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
             document.getElementById('date-display').textContent = formattedDate;
         }
@@ -139,11 +121,9 @@
         setInterval(updateClock, 1000);
         updateClock();
 
-        // --- 2. VIDAA OS DPAD Remote Navigation System ---
         let currentRow = 0;
         let currentCol = 0;
 
-        // Build navigation Matrix dynamically
         function getMatrix() {
             const rows = [];
             const rowElements = [
@@ -169,18 +149,15 @@
             currentRow = row;
             currentCol = col;
 
-            // Remove focused class from all elements
             document.querySelectorAll('.focusable').forEach(el => {
                 el.classList.remove('focused');
             });
 
-            // Highlight target item
             const target = matrix[currentRow][currentCol];
             if (target) {
                 target.classList.add('focused');
                 target.focus();
 
-                // Update row 1 label if active
                 const title = target.getAttribute('data-title');
                 const label = document.getElementById('active-app-label');
                 if (title && label) {
@@ -215,7 +192,6 @@
             }
         }
 
-        // DPAD Key Controller Mapping (Smart TV Standard + Keyboard Arrows)
         document.addEventListener('keydown', (e) => {
             const matrix = getMatrix();
 
@@ -276,7 +252,6 @@
             }
         });
 
-        // Mouse & Touch Interaction Support
         document.querySelectorAll('.focusable').forEach(el => {
             el.addEventListener('mouseenter', () => {
                 const r = parseInt(el.getAttribute('data-row'));
@@ -289,7 +264,6 @@
             });
         });
 
-        // Initialize focus on launch (First App: YouTube)
         window.addEventListener('load', () => {
             setFocus(0, 0);
         });
