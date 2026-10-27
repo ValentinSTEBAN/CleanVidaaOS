@@ -558,7 +558,7 @@
             </div>
             <div class="inputs-bar" id="folderToolbar">
                 <label class="folder-label" for="folderInput">
-                    📁 Ouvrir un dossier
+                    📁 Open Folder
                 </label>
                 <input
                     type="file"
@@ -569,7 +569,7 @@
                 <input
                     type="search"
                     id="search"
-                    placeholder="Rechercher un film..."
+                    placeholder="Search for a film..."
                 >
             </div>
             
@@ -577,7 +577,7 @@
                 <div class="share-box">
                     <div class="share-controls">
                         <select id="duration">
-                            <option value="0.0833">5 Minutes (Test)</option>
+                            <option value="0.0833">5 Minutes</option>
                             <option value="1">1 Hour</option>
                             <option value="2" selected>2 Hours</option>
                             <option value="6">6 Hours</option>
@@ -737,7 +737,7 @@
         l = [];
 
         if (files.length === 0) {
-            moviesContainer.innerHTML = '<p class="empty">Aucun fichier trouvé dans ce dossier.</p>';
+            moviesContainer.innerHTML = '<p class="empty">No files found in this folder.</p>';
             return;
         }
 
