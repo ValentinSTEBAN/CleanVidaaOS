@@ -764,7 +764,7 @@
 
     <script>
         function link1() {
-            open("index.html");
+            window.location.href = "index.html";
         }
 
         /* ================= CATALOGUE PRODUITS =================
@@ -779,6 +779,7 @@
                     { nom: "Thon",        prix: 4.80 },
                     { nom: "Raclette",    prix: 5.50 },
                     { nom: "Jambon beurre", prix: 4.20 },
+                    {nom: "Formule", prix: 5.00 },
                 ]
             },
             salade: {
@@ -798,7 +799,6 @@
                     { nom: "Pain au chocolat",   prix: 1.20 },
                     { nom: "Croissant amandes",  prix: 1.60 },
                     { nom: "Chausson aux pommes", prix: 1.80 },
-                    {nom: "Formule", prix: 5.00 },
                 ]
             }
         };
