@@ -77,6 +77,32 @@
 
         .header-actions { display: flex; align-items: center; gap: 12px; }
 
+        /* ===== SÉLECTEUR DE LANGUE ===== */
+        .lang-switch {
+            display: inline-flex;
+            align-items: center;
+            border: 1px solid rgba(201, 162, 39, 0.5);
+            border-radius: 999px;
+            overflow: hidden;
+            flex-shrink: 0;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .lang-btn {
+            padding: 9px 14px;
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.55);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            cursor: pointer;
+            transition: background 0.25s ease, color 0.25s ease;
+        }
+
+        .lang-btn.active { background: var(--gold-500); color: #ffffff; }
+        .lang-btn:not(.active):hover { color: var(--gold-300); }
+
         .header-reserve {
             flex-shrink: 0;
             white-space: nowrap;
@@ -608,6 +634,11 @@
             .header-logo span.brand { font-size: 14px; letter-spacing: 0.08em; }
             .header-reserve { padding: 9px 12px; font-size: 9px; letter-spacing: 0.06em; }
             .cart-btn { padding: 9px 14px; font-size: 10px; }
+            .lang-btn { padding: 8px 11px; font-size: 9px; }
+        }
+
+        @media (max-width: 400px) {
+            .lang-btn { padding: 7px 9px; font-size: 8px; }
         }
 
         /* Révélation au scroll */
@@ -629,67 +660,71 @@
             <span class="brand serif">VOTRE<span class="gold">RESTAURANT</span></span>
         </div>
         <div class="header-actions">
-            <button class="header-reserve" onclick="link1()">Retour</button>
+            <div class="lang-switch" role="group" aria-label="Language / Langue">
+                <button type="button" class="lang-btn active" id="btn-fr" onclick="setLanguage('fr')">FR</button>
+                <button type="button" class="lang-btn" id="btn-en" onclick="setLanguage('en')">EN</button>
+            </div>
+            <button class="header-reserve" data-i18n="back" onclick="link1()">Retour</button>
             <button class="cart-btn" onclick="openCart()">
-                Panier <span class="cart-count" id="cart-count">0</span>
+                <span data-i18n="cart">Panier</span> <span class="cart-count" id="cart-count">0</span>
             </button>
         </div>
     </header>
 
     <main>
         <section id="commander">
-            <h2 class="commander-title serif">Commandez dès maintenant !</h2>
-            <p class="commander-sub">Préparé à la minute par notre équipe <span class="g">— choisissez votre plaisir.</span></p>
+            <h2 class="commander-title serif" data-i18n="orderTitle">Commandez dès maintenant !</h2>
+            <p class="commander-sub" data-i18n-html="orderSub">Préparé à la minute par notre équipe <span class="g">— choisissez votre plaisir.</span></p>
 
             <div class="choices">
                 <div class="choice-card reveal">
                     <div class="choice-img-wrapper">
-                        <img class="choice-img" src="https://images.unsplash.com/photo-1509722747041-616f39b57569?q=80&w=800&auto=format&fit=crop" alt="Sandwich gourmand">
+                        <img class="choice-img" src="https://images.unsplash.com/photo-1509722747041-616f39b57569?q=80&w=800&auto=format&fit=crop" alt="Sandwich gourmand" data-i18n-alt="altSandwich">
                     </div>
-                    <h3 class="choice-name serif">Sandwich</h3>
-                    <div class="choice-price">à partir de 4,50 €</div>
-                    <p class="choice-desc">Pain frais du matin, et garniture généreuse.</p>
-                    <button class="choice-btn" onclick="openProductModal('sandwich')">Commander</button>
+                    <h3 class="choice-name serif" data-i18n="prodSandwich">Sandwich</h3>
+                    <div class="choice-price" data-i18n="priceSandwich">à partir de 4,50 €</div>
+                    <p class="choice-desc" data-i18n="descSandwich">Pain frais du matin, et garniture généreuse.</p>
+                    <button class="choice-btn" data-i18n="orderBtn" onclick="openProductModal('sandwich')">Commander</button>
                 </div>
 
                 <div class="choice-card reveal">
                     <div class="choice-img-wrapper">
-                        <img class="choice-img" src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=800&auto=format&fit=crop" alt="Salade fraîcheur">
+                        <img class="choice-img" src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=800&auto=format&fit=crop" alt="Salade fraîcheur" data-i18n-alt="altSalade">
                     </div>
-                    <h3 class="choice-name serif">Salade</h3>
-                    <div class="choice-price">à partir de 6,50 €</div>
-                    <p class="choice-desc">Crudités croquantes, protéines et vinaigrette maison.</p>
-                    <button class="choice-btn" onclick="openProductModal('salade')">Commander</button>
+                    <h3 class="choice-name serif" data-i18n="prodSalade">Salade</h3>
+                    <div class="choice-price" data-i18n="priceSalade">à partir de 6,50 €</div>
+                    <p class="choice-desc" data-i18n="descSalade">Crudités croquantes, protéines et vinaigrette maison.</p>
+                    <button class="choice-btn" data-i18n="orderBtn" onclick="openProductModal('salade')">Commander</button>
                 </div>
 
                 <div class="choice-card reveal">
                     <div class="choice-img-wrapper">
-                        <img class="choice-img" src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?q=80&w=800&auto=format&fit=crop" alt="Viennoiserie artisanale">
+                        <img class="choice-img" src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?q=80&w=800&auto=format&fit=crop" alt="Viennoiserie artisanale" data-i18n-alt="altViennoiserie">
                     </div>
-                    <h3 class="choice-name serif">Viennoiserie</h3>
-                    <div class="choice-price">à partir de 1,10 €</div>
-                    <p class="choice-desc">Croissants et pains au chocolat, cuits chaque matin.</p>
-                    <button class="choice-btn" onclick="openProductModal('viennoiserie')">Commander</button>
+                    <h3 class="choice-name serif" data-i18n="prodViennoiserie">Viennoiserie</h3>
+                    <div class="choice-price" data-i18n="priceViennoiserie">à partir de 1,10 €</div>
+                    <p class="choice-desc" data-i18n="descViennoiserie">Croissants et pains au chocolat, cuits chaque matin.</p>
+                    <button class="choice-btn" data-i18n="orderBtn" onclick="openProductModal('viennoiserie')">Commander</button>
                 </div>
             </div>
         </section>
 
-        <footer>© 2026 Votre Restaurant — Tous droits réservés</footer>
+        <footer data-i18n="footer">© 2026 Votre Restaurant — Tous droits réservés</footer>
     </main>
 
     <!-- ===== POP-UP PRODUIT ===== -->
     <div class="modal-overlay" id="product-modal" onclick="closeModalOnOverlay(event, 'product-modal')">
         <div class="modal" onclick="event.stopPropagation()">
-            <button class="modal-close" onclick="closeModal()" aria-label="Fermer">✕</button>
+            <button class="modal-close" onclick="closeModal()" aria-label="Fermer" data-i18n-aria="close">✕</button>
             <div class="modal-head">
                 <h3 class="serif" id="modal-title">Produit</h3>
                 <div class="modal-price" id="modal-price"></div>
             </div>
 
-            <label class="modal-label">Choisissez votre variante</label>
+            <label class="modal-label" data-i18n="chooseVariant">Choisissez votre variante</label>
             <div class="variant-list" id="variant-list"></div>
 
-            <label class="modal-label">Quantité</label>
+            <label class="modal-label" data-i18n="quantity">Quantité</label>
             <div class="qty-row">
                 <button class="qty-btn" onclick="changeQty(-1)">−</button>
                 <span class="qty-value" id="qty-value">1</span>
@@ -697,11 +732,11 @@
             </div>
 
             <div class="modal-total-row">
-                <span class="modal-total-label">Total</span>
+                <span class="modal-total-label" data-i18n="total">Total</span>
                 <span class="modal-total-value" id="modal-total">0,00 €</span>
             </div>
 
-            <button class="modal-add-btn" onclick="addToCart()">Ajouter au panier</button>
+            <button class="modal-add-btn" data-i18n="addToCart" onclick="addToCart()">Ajouter au panier</button>
         </div>
     </div>
 
@@ -709,16 +744,16 @@
     <div class="cart-overlay" id="cart-overlay" onclick="closeCartOnOverlay(event)">
         <div class="cart-panel" onclick="event.stopPropagation()">
             <div class="cart-head">
-                <h3 class="serif">Votre panier</h3>
-                <button class="modal-close" style="position:static;" onclick="closeCart()" aria-label="Fermer">✕</button>
+                <h3 class="serif" data-i18n="yourCart">Votre panier</h3>
+                <button class="modal-close" style="position:static;" onclick="closeCart()" aria-label="Fermer" data-i18n-aria="close">✕</button>
             </div>
             <div class="cart-items" id="cart-items"></div>
             <div class="cart-footer">
                 <div class="cart-total-row">
-                    <span class="cart-total-label">Total</span>
+                    <span class="cart-total-label" data-i18n="total">Total</span>
                     <span class="cart-total-value" id="cart-total">0,00 €</span>
                 </div>
-                <button class="cart-order-btn" onclick="validateOrder()">Valider la commande</button>
+                <button class="cart-order-btn" data-i18n="validateOrder" onclick="validateOrder()">Valider la commande</button>
             </div>
         </div>
     </div>
@@ -726,38 +761,38 @@
     <!-- ===== FORMULAIRE CLIENT (validation commande) ===== -->
     <div class="modal-overlay" id="order-modal" onclick="closeModalOnOverlay(event, 'order-modal')">
         <div class="modal" onclick="event.stopPropagation()">
-            <button class="modal-close" onclick="closeOrderModal()" aria-label="Fermer">✕</button>
+            <button class="modal-close" onclick="closeOrderModal()" aria-label="Fermer" data-i18n-aria="close">✕</button>
             <div class="modal-head">
-                <h3 class="serif">Finaliser votre commande</h3>
-                <div class="modal-price">Dernière étape</div>
+                <h3 class="serif" data-i18n="finalizeTitle">Finaliser votre commande</h3>
+                <div class="modal-price" data-i18n="lastStep">Dernière étape</div>
             </div>
 
             <div class="order-summary" id="order-summary"></div>
 
-            <label class="modal-label">Vos informations</label>
+            <label class="modal-label" data-i18n="yourInfo">Vos informations</label>
             <form id="order-form" novalidate>
                 <div class="form-group" id="fg-prenom">
-                    <label for="f-prenom">Prénom</label>
+                    <label for="f-prenom" data-i18n="firstName">Prénom</label>
                     <input type="text" id="f-prenom" placeholder="Marie" autocomplete="given-name">
-                    <p class="form-error">Merci d'indiquer votre prénom.</p>
+                    <p class="form-error" data-i18n="errPrenom">Merci d'indiquer votre prénom.</p>
                 </div>
                 <div class="form-group" id="fg-nom">
-                    <label for="f-nom">Nom</label>
+                    <label for="f-nom" data-i18n="lastName">Nom</label>
                     <input type="text" id="f-nom" placeholder="Dupont" autocomplete="family-name">
-                    <p class="form-error">Merci d'indiquer votre nom.</p>
+                    <p class="form-error" data-i18n="errNom">Merci d'indiquer votre nom.</p>
                 </div>
                 <div class="form-group" id="fg-tel">
-                    <label for="f-tel">Téléphone</label>
+                    <label for="f-tel" data-i18n="phone">Téléphone</label>
                     <input type="tel" id="f-tel" placeholder="06 12 34 56 78" autocomplete="tel" inputmode="tel">
-                    <p class="form-error">Merci d'indiquer un numéro valide (10 chiffres).</p>
+                    <p class="form-error" data-i18n="errTel">Merci d'indiquer un numéro valide (10 chiffres).</p>
                 </div>
                 <div class="form-group" id="fg-heure">
-                    <label for="f-heure">Heure de passage</label>
+                    <label for="f-heure" data-i18n="pickupTime">Heure de passage</label>
                     <input type="time" id="f-heure" value="12:00">
-                    <p class="form-error">Merci de choisir une heure de passage.</p>
+                    <p class="form-error" data-i18n="errHeure">Merci de choisir une heure de passage.</p>
                 </div>
 
-                <button type="submit" class="modal-add-btn" style="margin-top:18px;">Confirmer la commande</button>
+                <button type="submit" class="modal-add-btn" style="margin-top:18px;" data-i18n="confirmOrder">Confirmer la commande</button>
             </form>
         </div>
     </div>
@@ -767,74 +802,246 @@
             window.location.href = "index.html";
         }
 
+        /* ================= TRADUCTIONS FR / EN =================
+           Même clé localStorage que la page d'accueil ('site-lang')
+           pour que la langue soit partagée entre les pages.
+        ========================================================= */
+        const translations = {
+            en: {
+                _title: "Your Restaurant — Order",
+                _lang: "en",
+                back: "Back",
+                cart: "Cart",
+                orderTitle: "Order Now!",
+                orderSub: "Freshly prepared by our team <span class=\"g\">— pick your favourite.</span>",
+                orderBtn: "Order",
+                altSandwich: "Gourmet sandwich",
+                altSalade: "Fresh salad",
+                altViennoiserie: "Artisan pastry",
+                prodSandwich: "Sandwich",
+                priceSandwich: "from 4,50 €",
+                descSandwich: "Fresh morning bread and a generous filling.",
+                prodSalade: "Salad",
+                priceSalade: "from 6,50 €",
+                descSalade: "Crunchy vegetables, proteins and homemade dressing.",
+                prodViennoiserie: "Pastry",
+                priceViennoiserie: "from 1,10 €",
+                descViennoiserie: "Croissants and pain au chocolat, baked fresh every morning.",
+                close: "Close",
+                chooseVariant: "Choose your option",
+                quantity: "Quantity",
+                total: "Total",
+                addToCart: "Add to cart",
+                yourCart: "Your cart",
+                validateOrder: "Place the order",
+                finalizeTitle: "Complete your order",
+                lastStep: "Final step",
+                yourInfo: "Your details",
+                firstName: "First name",
+                lastName: "Last name",
+                phone: "Phone",
+                pickupTime: "Pickup time",
+                errPrenom: "Please enter your first name.",
+                errNom: "Please enter your last name.",
+                errTel: "Please enter a valid phone number (10 digits).",
+                errHeure: "Please choose a pickup time.",
+                confirmOrder: "Confirm order",
+                footer: "© 2026 Your Restaurant — All rights reserved",
+                // Textes dynamiques
+                startingFrom: "from ",
+                cartEmpty1: "Your cart is empty.",
+                cartEmpty2: "Add an item from the menu to your order!",
+                yourOrder: "Your order:",
+                orderConfirmed: "Order confirmed",
+                pickupAt: "Ready for pickup at ",
+                weWillCall: "We will call you at ",
+                ifNeeded: " if needed.\nThank you and see you soon!",
+                remove: "Remove"
+            },
+            fr: {
+                _title: "Votre Restaurant",
+                _lang: "fr",
+                back: "Retour",
+                cart: "Panier",
+                orderTitle: "Commandez dès maintenant !",
+                orderSub: "Préparé à la minute par notre équipe <span class=\"g\">— choisissez votre plaisir.</span>",
+                orderBtn: "Commander",
+                altSandwich: "Sandwich gourmand",
+                altSalade: "Salade fraîcheur",
+                altViennoiserie: "Viennoiserie artisanale",
+                prodSandwich: "Sandwich",
+                priceSandwich: "à partir de 4,50 €",
+                descSandwich: "Pain frais du matin, et garniture généreuse.",
+                prodSalade: "Salade",
+                priceSalade: "à partir de 6,50 €",
+                descSalade: "Crudités croquantes, protéines et vinaigrette maison.",
+                prodViennoiserie: "Viennoiserie",
+                priceViennoiserie: "à partir de 1,10 €",
+                descViennoiserie: "Croissants et pains au chocolat, cuits chaque matin.",
+                close: "Fermer",
+                chooseVariant: "Choisissez votre variante",
+                quantity: "Quantité",
+                total: "Total",
+                addToCart: "Ajouter au panier",
+                yourCart: "Votre panier",
+                validateOrder: "Valider la commande",
+                finalizeTitle: "Finaliser votre commande",
+                lastStep: "Dernière étape",
+                yourInfo: "Vos informations",
+                firstName: "Prénom",
+                lastName: "Nom",
+                phone: "Téléphone",
+                pickupTime: "Heure de passage",
+                errPrenom: "Merci d'indiquer votre prénom.",
+                errNom: "Merci d'indiquer votre nom.",
+                errTel: "Merci d'indiquer un numéro valide (10 chiffres).",
+                errHeure: "Merci de choisir une heure de passage.",
+                confirmOrder: "Confirmer la commande",
+                footer: "© 2026 Votre Restaurant — Tous droits réservés",
+                // Textes dynamiques
+                startingFrom: "à partir de ",
+                cartEmpty1: "Votre panier est vide.",
+                cartEmpty2: "Ajoutez un article de la carte à votre commande !",
+                yourOrder: "Votre commande :",
+                orderConfirmed: "Commande confirmée",
+                pickupAt: "À récupérer à ",
+                weWillCall: "Nous vous appellerons au ",
+                ifNeeded: " si besoin.\nMerci et à tout à l'heure !",
+                remove: "Supprimer"
+            }
+        };
+
+        let currentLang = 'fr';
+
+        // Clé utilisée pour les textes dynamiques
+        const t = (key) => translations[currentLang][key];
+
+        // Sauvegarde du HTML original français
+        const originalFr = {};
+        document.querySelectorAll('[data-i18n], [data-i18n-html]').forEach(el => {
+            const key = el.getAttribute('data-i18n') || el.getAttribute('data-i18n-html');
+            if (!(key in originalFr)) originalFr[key] = el.innerHTML;
+        });
+
+        function setLanguage(lang) {
+            const dict = translations[lang];
+            if (!dict) return;
+            currentLang = lang;
+
+            document.documentElement.lang = dict._lang;
+            document.title = dict._title;
+            localStorage.setItem('site-lang', lang);
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                el.textContent = dict[key] !== undefined ? dict[key] : (originalFr[key] || el.textContent);
+            });
+
+            document.querySelectorAll('[data-i18n-html]').forEach(el => {
+                const key = el.getAttribute('data-i18n-html');
+                el.innerHTML = dict[key] !== undefined ? dict[key] : (originalFr[key] || el.innerHTML);
+            });
+
+            document.querySelectorAll('[data-i18n-aria]').forEach(el => {
+                const key = el.getAttribute('data-i18n-aria');
+                el.setAttribute('aria-label', dict[key] !== undefined ? dict[key] : el.getAttribute('aria-label'));
+            });
+
+            document.querySelectorAll('[data-i18n-alt]').forEach(el => {
+                const key = el.getAttribute('data-i18n-alt');
+                el.setAttribute('alt', dict[key] !== undefined ? dict[key] : el.getAttribute('alt'));
+            });
+
+            document.getElementById('btn-fr').classList.toggle('active', lang === 'fr');
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+
+            // Rafraîchit les zones dynamiques déjà affichées
+            renderCart();
+            if (produitActif) refreshProductModal();
+        }
+
         /* ================= CATALOGUE PRODUITS =================
            Chaque produit a des variantes avec leur propre prix.
-           Pour ajouter une variante : ajoutez { nom, prix } dans "variantes".
+           Pour ajouter une variante : ajoutez { nom, nom_en, prix } dans "variantes".
         ========================================================= */
         const produits = {
             sandwich: {
                 nom: "Sandwich",
+                nom_en: "Sandwich",
                 variantes: [
-                    { nom: "Poulet",      prix: 4.50 },
-                    { nom: "Thon",        prix: 4.80 },
-                    { nom: "Raclette",    prix: 5.50 },
-                    { nom: "Jambon beurre", prix: 4.20 },
-                    {nom: "Formule", prix: 5.00 },
+                    { nom: "Poulet",        nom_en: "Chicken",          prix: 4.50 },
+                    { nom: "Thon",          nom_en: "Tuna",             prix: 4.80 },
+                    { nom: "Raclette",      nom_en: "Raclette",         prix: 5.50 },
+                    { nom: "Jambon beurre", nom_en: "Ham & butter",     prix: 4.20 },
+                    { nom: "Formule",       nom_en: "Combo",            prix: 5.00 },
                 ]
             },
             salade: {
                 nom: "Salade",
+                nom_en: "Salad",
                 variantes: [
-                    { nom: "César",        prix: 7.50 },
-                    { nom: "Poulet avocat", prix: 8.00 },
-                    { nom: "Saumon",        prix: 9.00 },
-                    { nom: "Végétarienne",  prix: 6.50 },
-                    {nom: "Formule", prix: 5.00 },
+                    { nom: "César",         nom_en: "Caesar",           prix: 7.50 },
+                    { nom: "Poulet avocat", nom_en: "Chicken & avocado", prix: 8.00 },
+                    { nom: "Saumon",        nom_en: "Salmon",           prix: 9.00 },
+                    { nom: "Végétarienne",  nom_en: "Vegetarian",       prix: 6.50 },
+                    { nom: "Formule",       nom_en: "Combo",            prix: 5.00 },
                 ]
             },
             viennoiserie: {
                 nom: "Viennoiserie",
+                nom_en: "Pastry",
                 variantes: [
-                    { nom: "Croissant",          prix: 1.10 },
-                    { nom: "Pain au chocolat",   prix: 1.20 },
-                    { nom: "Croissant amandes",  prix: 1.60 },
-                    { nom: "Chausson aux pommes", prix: 1.80 },
+                    { nom: "Croissant",           nom_en: "Croissant",           prix: 1.10 },
+                    { nom: "Pain au chocolat",    nom_en: "Pain au chocolat",     prix: 1.20 },
+                    { nom: "Croissant amandes",   nom_en: "Almond croissant",     prix: 1.60 },
+                    { nom: "Chausson aux pommes", nom_en: "Apple turnover",       prix: 1.80 },
                 ]
             }
         };
 
+        // Nom d'un produit / d'une variante selon la langue active
+        const nomProduit = (p) => currentLang === 'en' && p.nom_en ? p.nom_en : p.nom;
+        const nomVariante = (v) => currentLang === 'en' && v.nom_en ? v.nom_en : v.nom;
+
         /* ================= ÉTAT ================= */
-        let panier = [];          // { produit, variante, prix, qty }
+        let panier = [];          // { produitKey, varianteIdx, prix, qty }
         let produitActif = null;  // clé du produit ouvert dans la pop-up
         let varianteChoisie = 0;  // index de la variante sélectionnée
         let quantite = 1;
 
-        const eur = (n) => n.toFixed(2).replace('.', ',') + ' €';
+        // Prix affiché selon la langue (format FR ou EN)
+        const eur = (n) => {
+            const s = n.toFixed(2).replace('.', ',') + ' €';
+            return currentLang === 'en' ? s.replace(',', '.') : s;
+        };
 
         /* ================= POP-UP PRODUIT ================= */
         function openProductModal(cle) {
             produitActif = cle;
             varianteChoisie = 0;
             quantite = 1;
+            refreshProductModal();
+            document.getElementById('qty-value').textContent = quantite;
+            showOverlay('product-modal');
+        }
 
-            const p = produits[cle];
-            document.getElementById('modal-title').textContent = p.nom;
-            document.getElementById('modal-price').textContent = 'à partir de ' + eur(Math.min(...p.variantes.map(v => v.prix)));
+        function refreshProductModal() {
+            const p = produits[produitActif];
+            document.getElementById('modal-title').textContent = nomProduit(p);
+            document.getElementById('modal-price').textContent = t('startingFrom') + eur(Math.min(...p.variantes.map(v => v.prix)));
 
             // Génère les pastilles de variantes
             const list = document.getElementById('variant-list');
             list.innerHTML = '';
             p.variantes.forEach((v, i) => {
                 const pill = document.createElement('button');
-                pill.className = 'variant-pill' + (i === 0 ? ' selected' : '');
-                pill.innerHTML = v.nom + ' <span class="vp-price">' + eur(v.prix) + '</span>';
+                pill.className = 'variant-pill' + (i === varianteChoisie ? ' selected' : '');
+                pill.innerHTML = nomVariante(v) + ' <span class="vp-price">' + eur(v.prix) + '</span>';
                 pill.onclick = () => selectVariante(i);
                 list.appendChild(pill);
             });
 
             updateModalTotal();
-            document.getElementById('qty-value').textContent = quantite;
-            showOverlay('product-modal');
         }
 
         function selectVariante(i) {
@@ -858,15 +1065,12 @@
 
         /* ================= PANIER ================= */
         function addToCart() {
-            const p = produits[produitActif];
-            const v = p.variantes[varianteChoisie];
-
             // Si la même variante est déjà au panier, on additionne la quantité
-            const existant = panier.find(item => item.produit === p.nom && item.variante === v.nom);
+            const existant = panier.find(item => item.produitKey === produitActif && item.varianteIdx === varianteChoisie);
             if (existant) {
                 existant.qty += quantite;
             } else {
-                panier.push({ produit: p.nom, variante: v.nom, prix: v.prix, qty: quantite });
+                panier.push({ produitKey: produitActif, varianteIdx: varianteChoisie, prix: produits[produitActif].variantes[varianteChoisie].prix, qty: quantite });
             }
 
             closeModal();
@@ -895,17 +1099,19 @@
             document.getElementById('cart-total').textContent = eur(total);
 
             if (panier.length === 0) {
-                container.innerHTML = '<div class="cart-empty">Votre panier est vide.<br>Ajoutez un article de la carte à votre commande !</div>';
+                container.innerHTML = '<div class="cart-empty">' + t('cartEmpty1') + '<br>' + t('cartEmpty2') + '</div>';
                 return;
             }
 
             container.innerHTML = '';
             panier.forEach((item, i) => {
+                const p = produits[item.produitKey];
+                const v = p.variantes[item.varianteIdx];
                 const el = document.createElement('div');
                 el.className = 'cart-item';
                 el.innerHTML =
                     '<div class="cart-item-info">' +
-                        '<div class="cart-item-name">' + item.produit + ' — ' + item.variante + '</div>' +
+                        '<div class="cart-item-name">' + nomProduit(p) + ' — ' + nomVariante(v) + '</div>' +
                         '<div class="cart-item-price">' + eur(item.prix * item.qty) + '</div>' +
                     '</div>' +
                     '<div class="cart-item-qty">' +
@@ -913,7 +1119,7 @@
                         '<span>' + item.qty + '</span>' +
                         '<button onclick="changeCartQty(' + i + ',1)">+</button>' +
                     '</div>' +
-                    '<button class="cart-remove" onclick="removeCartItem(' + i + ')" aria-label="Supprimer">✕</button>';
+                    '<button class="cart-remove" onclick="removeCartItem(' + i + ')" aria-label="' + t('remove') + '">✕</button>';
                 container.appendChild(el);
             });
         }
@@ -924,11 +1130,15 @@
             // Résumé de la commande dans la pop-up
             const total = panier.reduce((s, it) => s + it.prix * it.qty, 0);
             const lignes = panier
-                .map(it => it.qty + '× ' + it.produit + ' ' + it.variante + ' — ' + eur(it.prix * it.qty))
+                .map(it => {
+                    const p = produits[it.produitKey];
+                    const v = p.variantes[it.varianteIdx];
+                    return it.qty + '× ' + nomProduit(p) + ' ' + nomVariante(v) + ' — ' + eur(it.prix * it.qty);
+                })
                 .join('<br>');
             document.getElementById('order-summary').innerHTML =
-                '<strong>Votre commande :</strong><br>' + lignes +
-                '<br><strong>Total : ' + eur(total) + '</strong>';
+                '<strong>' + t('yourOrder') + '</strong><br>' + lignes +
+                '<br><strong>' + t('total') + ' : ' + eur(total) + '</strong>';
 
             // Réinitialise les erreurs du formulaire
             document.querySelectorAll('.form-group').forEach(el => el.classList.remove('invalid'));
@@ -965,14 +1175,18 @@
 
             // Récapitulatif final
             const total = panier.reduce((s, it) => s + it.prix * it.qty, 0);
-            const resume = panier.map(it => it.qty + '× ' + it.produit + ' ' + it.variante).join('\n');
+            const resume = panier.map(it => {
+                const p = produits[it.produitKey];
+                const v = p.variantes[it.varianteIdx];
+                return it.qty + '× ' + nomProduit(p) + ' ' + nomVariante(v);
+            }).join('\n');
 
             alert(
-                'Commande confirmée, ' + prenom + ' !\n\n' +
+                t('orderConfirmed') + ', ' + prenom + ' !\n\n' +
                 resume +
-                '\n\nTotal : ' + eur(total) +
-                '\n\nÀ récupérer à ' + heure +
-                '\n\nNous vous appellerons au ' + tel + ' si besoin.\nMerci et à tout à l\'heure !'
+                '\n\n' + t('total') + ' : ' + eur(total) +
+                '\n\n' + t('pickupAt') + heure +
+                '\n\n' + t('weWillCall') + tel + t('ifNeeded')
             );
 
             // Ici, envoyez la commande vers votre back-office / API :
@@ -1028,7 +1242,11 @@
         }, { threshold: 0.15 });
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // Init
+        /* ================= INIT ================= */
+        // Langue mémorisée au chargement (partagée avec la page d'accueil)
+        const saved = localStorage.getItem('site-lang');
+        if (saved && saved !== 'fr') setLanguage(saved);
+
         renderCart();
     </script>
 </body>
