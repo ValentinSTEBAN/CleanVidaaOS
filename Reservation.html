@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beffroi Gourmand</title>
+    <title>Votre Restaurant</title>
     <style>
         :root {
             --gold-300: #f0d488;
@@ -626,7 +626,7 @@
 
     <header>
         <div class="header-logo">
-            <span class="brand serif">BEFFROI<span class="gold">GOURMAND</span></span>
+            <span class="brand serif">VOTRE<span class="gold">RESTAURANT</span></span>
         </div>
         <div class="header-actions">
             <button class="header-reserve" onclick="link1()">Retour</button>
@@ -674,7 +674,7 @@
             </div>
         </section>
 
-        <footer>© 2026 Beffroi Gourmand Douai</footer>
+        <footer>© 2026 Votre Restaurant — Tous droits réservés</footer>
     </main>
 
     <!-- ===== POP-UP PRODUIT ===== -->
@@ -895,7 +895,7 @@
             document.getElementById('cart-total').textContent = eur(total);
 
             if (panier.length === 0) {
-                container.innerHTML = '<div class="cart-empty">Votre panier est vide.<br>Ajoutez un sandwich, une salade ou une viennoiserie !</div>';
+                container.innerHTML = '<div class="cart-empty">Votre panier est vide.<br>Ajoutez un article de la carte à votre commande !</div>';
                 return;
             }
 
