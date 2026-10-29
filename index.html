@@ -137,6 +137,38 @@
             transform: translateY(0);
         }
 
+        /* ===== SÉLECTEUR DE LANGUE ===== */
+        .lang-switch {
+            display: inline-flex;
+            align-items: center;
+            border: 1px solid rgba(201, 162, 39, 0.5);
+            border-radius: 999px;
+            overflow: hidden;
+            flex-shrink: 0;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .lang-btn {
+            padding: 7px 13px;
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.55);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            cursor: pointer;
+            transition: background 0.25s ease, color 0.25s ease;
+        }
+
+        .lang-btn.active {
+            background: #c9a227;
+            color: #ffffff;
+        }
+
+        .lang-btn:not(.active):hover {
+            color: #f0d488;
+        }
+
         /* ===== RÉSEAUX SOCIAUX ===== */
 
         .social-links {
@@ -437,6 +469,11 @@
                 font-size: 9px !important;
                 letter-spacing: 0.06em !important;
             }
+
+            .lang-btn {
+                padding: 6px 10px;
+                font-size: 9px;
+            }
         }
 
         /* Très petits téléphones */
@@ -455,6 +492,11 @@
                 padding: 8px 9px !important;
                 font-size: 8px !important;
                 letter-spacing: 0.02em !important;
+            }
+
+            .lang-btn {
+                padding: 5px 8px;
+                font-size: 8px;
             }
         }
     </style>
@@ -477,14 +519,22 @@
         </div>
 
         <div class="hidden lg:flex space-x-10 text-[11px] font-semibold tracking-[0.2em] uppercase text-white/60">
-            <a href="#hero">01. Notre Maison</a>
-            <a href="#ingredients">02. Nos Produits</a>
-            <a href="#savoirfaire">03. Notre Cuisine</a>
+            <a href="#hero" data-i18n="nav1">01. Notre Maison</a>
+            <a href="#ingredients" data-i18n="nav2">02. Nos Produits</a>
+            <a href="#savoirfaire" data-i18n="nav3">03. Notre Cuisine</a>
         </div>
 
-        <button class="header-reserve px-6 py-2.5 border border-gold-400/60 hover:bg-gold-500 hover:border-gold-500 bg-black/20 text-gold-300 hover:text-white text-[11px] font-semibold tracking-[0.2em] uppercase rounded-full transition-all duration-300" onclick="link1()">
-            Réserver
-        </button>
+        <div class="flex items-center gap-4">
+            <!-- Sélecteur de langue FR / EN -->
+            <div class="lang-switch" role="group" aria-label="Language / Langue">
+                <button type="button" class="lang-btn active" id="btn-fr" onclick="setLanguage('fr')">FR</button>
+                <button type="button" class="lang-btn" id="btn-en" onclick="setLanguage('en')">EN</button>
+            </div>
+
+            <button class="header-reserve px-6 py-2.5 border border-gold-400/60 hover:bg-gold-500 hover:border-gold-500 bg-black/20 text-gold-300 hover:text-white text-[11px] font-semibold tracking-[0.2em] uppercase rounded-full transition-all duration-300" data-i18n="reserve" onclick="link1()">
+                Réserver
+            </button>
+        </div>
     </header>
 
     <!-- Scroll Sections -->
@@ -495,12 +545,12 @@
             <div class="max-w-xl glass-luxury p-10 md:p-14 rounded-3xl">
                 <div class="flex items-center space-x-3 mb-6">
                     <span class="w-10 h-[1px] bg-gold-500"></span>
-                    <span class="text-burgundy text-[11px] font-bold tracking-[0.3em] uppercase">Bienvenue</span>
+                    <span class="text-burgundy text-[11px] font-bold tracking-[0.3em] uppercase" data-i18n="welcome">Bienvenue</span>
                 </div>
-                <h1 class="text-4xl md:text-6xl font-serif font-bold leading-[1.15] mb-6 text-charcoal">
+                <h1 class="text-4xl md:text-6xl font-serif font-bold leading-[1.15] mb-6 text-charcoal" data-i18n-html="heroTitle">
                     Une table d'exception, <br><span class="text-gold-600 gold-glow italic">pour vous</span>.
                 </h1>
-                <p class="text-charcoal/80 text-sm md:text-base font-normal leading-relaxed tracking-wide" style="margin-bottom: 6px;">
+                <p class="text-charcoal/80 text-sm md:text-base font-normal leading-relaxed tracking-wide" style="margin-bottom: 6px;" data-i18n="heroText">
                     Une cuisine de saison, préparée chaque jour à partir de produits frais et sélectionnés
                     auprès de producteurs partenaires. Sur place ou à emporter, chaque plat est
                     préparé à la minute avec soin.
@@ -514,15 +564,15 @@
                         </div>
 
                         <div class="location-info">
-                            <span class="location-label">NOUS TROUVER</span>
+                            <span class="location-label" data-i18n="findUs">NOUS TROUVER</span>
                             <a
                                 class="location-address"
                                 href="https://www.google.com/maps"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                12 rue de l'Exemple
-                                <span>75000 Paris, France</span>
+                                <span data-i18n="address1">12 rue de l'Exemple</span>
+                                <span data-i18n="address2">75000 Paris, France</span>
                             </a>
                         </div>
                         <a
@@ -531,8 +581,9 @@
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label="Ouvrir l'itinéraire dans Google Maps"
+                            data-i18n-aria="itineraryAria"
                         >
-                            <span class="location-button-desktop">Itinéraire</span>
+                            <span class="location-button-desktop" data-i18n="itinerary">Itinéraire</span>
                             <i class="fa-solid fa-arrow-up-right-from-square"></i>
                         </a>
                     </div>
@@ -544,29 +595,29 @@
                     <div class="opening-hours">
                         <div class="opening-title">
                             <i class="fa-regular fa-clock"></i>
-                            <span>Nos horaires</span>
+                            <span data-i18n="hours">Nos horaires</span>
                         </div>
 
                         <div class="opening-row">
-                            <span>Lundi – Vendredi</span>
-                            <span>11h–14h30 · 18h–22h</span>
+                            <span data-i18n="days1">Lundi – Vendredi</span>
+                            <span data-i18n="hours1">11h–14h30 · 18h–22h</span>
                         </div>
 
                         <div class="opening-row">
-                            <span>Samedi</span>
-                            <span>11h–15h · 18h–23h</span>
+                            <span data-i18n="days2">Samedi</span>
+                            <span data-i18n="hours2">11h–15h · 18h–23h</span>
                         </div>
 
                         <div class="opening-row">
-                            <span>Dimanche</span>
-                            <span>11h–15h</span>
+                            <span data-i18n="days3">Dimanche</span>
+                            <span data-i18n="hours3">11h–15h</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="flex flex-wrap items-center gap-6 mb-6">
                     <a onclick="link2()" class="px-8 py-4 bg-charcoal hover:bg-gold-500 text-ivory hover:text-white font-bold text-[11px] uppercase tracking-[0.2em] rounded-full transition-all duration-300 transform hover:scale-105 shadow-xl shadow-black/25 flex items-center gap-3">
-                        <span>Notre carte</span>
+                        <span data-i18n="menuBtn">Notre carte</span>
                         <i class="fa-solid fa-arrow-down text-xs"></i>
                     </a>
                 </div>
@@ -581,11 +632,11 @@
                         <i class="fa-brands fa-tiktok"></i>
                         <span class="social-link-label">TikTok</span>
                     </a>
-                    <a class="social-link" href="tel:+33300000000" aria-label="Nous appeler">
+                    <a class="social-link" href="tel:+33300000000" aria-label="Nous appeler" data-i18n-aria="callAria">
                         <i class="fa-solid fa-phone"></i>
                         <span class="social-link-label">03 00 00 00 00</span>
                     </a>
-                    <a class="social-link" href="mailto:contact@votre-restaurant.fr" aria-label="Nous écrire">
+                    <a class="social-link" href="mailto:contact@votre-restaurant.fr" aria-label="Nous écrire" data-i18n-aria="mailAria">
                         <i class="fa-solid fa-envelope"></i>
                         <span class="social-link-label">contact@votre-restaurant.fr</span>
                     </a>
@@ -596,24 +647,24 @@
         <!-- SECTION 2: PRODUITS FRAIS -->
         <section id="ingredients" class="min-h-screen flex items-center justify-end px-6 md:px-20 max-w-7xl mx-auto">
             <div class="max-w-md glass-luxury p-10 rounded-3xl reveal">
-                <span class="text-burgundy text-[11px] font-bold tracking-[0.25em] uppercase block mb-3">02 / Origine & Fraîcheur</span>
-                <h2 class="text-3xl md:text-4xl font-serif font-bold mb-6 text-charcoal leading-tight">Des Produits Frais du Jour</h2>
-                <p class="text-charcoal/80 text-xs md:text-sm leading-relaxed mb-8 font-normal">
+                <span class="text-burgundy text-[11px] font-bold tracking-[0.25em] uppercase block mb-3" data-i18n="section2Label">02 / Origine &amp; Fraîcheur</span>
+                <h2 class="text-3xl md:text-4xl font-serif font-bold mb-6 text-charcoal leading-tight" data-i18n="section2Title">Des Produits Frais du Jour</h2>
+                <p class="text-charcoal/80 text-xs md:text-sm leading-relaxed mb-8 font-normal" data-i18n="section2Text">
                     Chaque matin, notre équipe sélectionne et prépare les produits de votre repas.
                 </p>
                 <div class="space-y-5 border-t border-gold-500/25 pt-6">
                     <div class="flex items-start gap-4">
                         <span class="swatch mt-0.5" style="background:#7a4a24"></span>
                         <div>
-                            <h4 class="text-xs font-bold uppercase tracking-wider text-charcoal">Produits de Saison</h4>
-                            <p class="text-xs text-charcoal/60 font-normal mt-1">Fruits, légumes et herbes sélectionnés à maturité, auprès de producteurs partenaires.</p>
+                            <h4 class="text-xs font-bold uppercase tracking-wider text-charcoal" data-i18n="seasonalTitle">Produits de Saison</h4>
+                            <p class="text-xs text-charcoal/60 font-normal mt-1" data-i18n="seasonalText">Fruits, légumes et herbes sélectionnés à maturité, auprès de producteurs partenaires.</p>
                         </div>
                     </div>
                     <div class="flex items-start gap-4">
                         <span class="swatch mt-0.5" style="background:#f5b324"></span>
                         <div>
-                            <h4 class="text-xs font-bold uppercase tracking-wider text-charcoal">Circuits Courts</h4>
-                            <p class="text-xs text-charcoal/60 font-normal mt-1">Viandes, poissons et fromages issus d'artisans et fournisseurs locaux.</p>
+                            <h4 class="text-xs font-bold uppercase tracking-wider text-charcoal" data-i18n="localTitle">Circuits Courts</h4>
+                            <p class="text-xs text-charcoal/60 font-normal mt-1" data-i18n="localText">Viandes, poissons et fromages issus d'artisans et fournisseurs locaux.</p>
                         </div>
                     </div>
                 </div>
@@ -623,9 +674,9 @@
         <!-- SECTION 3: CUISINE & SUR MESURE -->
         <section id="savoirfaire" class="min-h-screen flex items-center justify-start px-6 md:px-20 max-w-7xl mx-auto">
             <div class="max-w-md glass-luxury p-10 rounded-3xl reveal">
-                <span class="text-burgundy text-[11px] font-bold tracking-[0.25em] uppercase block mb-3">03 / Notre Cuisine</span>
-                <h2 class="text-3xl md:text-4xl font-serif font-bold mb-6 text-charcoal leading-tight">Sur Place ou à Emporter</h2>
-                <p class="text-charcoal/80 text-xs md:text-sm leading-relaxed mb-6 font-normal">
+                <span class="text-burgundy text-[11px] font-bold tracking-[0.25em] uppercase block mb-3" data-i18n="section3Label">03 / Notre Cuisine</span>
+                <h2 class="text-3xl md:text-4xl font-serif font-bold mb-6 text-charcoal leading-tight" data-i18n="section3Title">Sur Place ou à Emporter</h2>
+                <p class="text-charcoal/80 text-xs md:text-sm leading-relaxed mb-6 font-normal" data-i18n="section3Text">
                     Installez-vous dans notre salle pour un moment convivial, ou profitez de nos plats
                     à emporter. Notre carte évolue au fil des saisons et nos suggestions changent
                     chaque semaine. Chaque commande est préparée à la minute, avec soin.
@@ -640,13 +691,13 @@
                 <div class="absolute -top-24 -right-24 w-64 h-64 bg-gold-400/20 rounded-full blur-3xl pointer-events-none"></div>
                 <div class="absolute -bottom-32 -left-24 w-72 h-72 bg-burgundy/10 rounded-full blur-3xl pointer-events-none"></div>
 
-                <span class="text-gold-600 font-serif text-sm tracking-[0.3em] uppercase block mb-3">L'Expérience Unique</span>
-                <h2 class="text-4xl md:text-6xl font-serif font-bold mb-6 text-charcoal">Réservez dès maintenant !</h2>
-                <p class="text-charcoal/80 max-w-xl mx-auto mb-10 text-xs md:text-sm leading-relaxed font-normal">
+                <span class="text-gold-600 font-serif text-sm tracking-[0.3em] uppercase block mb-3" data-i18n="experienceLabel">L'Expérience Unique</span>
+                <h2 class="text-4xl md:text-6xl font-serif font-bold mb-6 text-charcoal" data-i18n="bookTitle">Réservez dès maintenant !</h2>
+                <p class="text-charcoal/80 max-w-xl mx-auto mb-10 text-xs md:text-sm leading-relaxed font-normal" data-i18n="bookText">
                     Une équipe attentive, une cuisine préparée à la minute.
                 </p>
                 <div class="flex flex-col sm:flex-row justify-center gap-5">
-                    <button class="px-10 py-4 bg-burgundy hover:bg-[#932535] text-ivory font-extrabold text-xs tracking-[0.2em] uppercase rounded-full transition-all duration-300 transform hover:scale-105 shadow-2xl shadow-burgundy/30" onclick="link1()">
+                    <button class="px-10 py-4 bg-burgundy hover:bg-[#932535] text-ivory font-extrabold text-xs tracking-[0.2em] uppercase rounded-full transition-all duration-300 transform hover:scale-105 shadow-2xl shadow-burgundy/30" data-i18n="bookBtn" onclick="link1()">
                         Réserver une table
                     </button>
                 </div>
@@ -659,16 +710,16 @@
                     <a class="social-link" href="https://www.tiktok.com/@votre-compte" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
                         <i class="fa-brands fa-tiktok"></i>
                     </a>
-                    <a class="social-link" href="tel:+33300000000" aria-label="Nous appeler">
+                    <a class="social-link" href="tel:+33300000000" aria-label="Nous appeler" data-i18n-aria="callAria">
                         <i class="fa-solid fa-phone"></i>
                     </a>
-                    <a class="social-link" href="mailto:contact@votre-restaurant.fr" aria-label="Nous écrire">
+                    <a class="social-link" href="mailto:contact@votre-restaurant.fr" aria-label="Nous écrire" data-i18n-aria="mailAria">
                         <i class="fa-solid fa-envelope"></i>
                     </a>
                 </div>
             </div>
 
-            <footer class="mt-20 text-white/50 text-[10px] tracking-[0.2em] uppercase">
+            <footer class="mt-20 text-white/50 text-[10px] tracking-[0.2em] uppercase" data-i18n="footer">
                 © 2026 Votre Restaurant — Tous droits réservés
             </footer>
         </section>
@@ -687,6 +738,132 @@
         function link2() {
             window.location.href = "carte.pdf";
         }
+
+        // ================= TRADUCTIONS FR / EN =================
+        const translations = {
+            en: {
+                _title: "Your Restaurant",
+                _lang: "en",
+                nav1: "01. Our House",
+                nav2: "02. Our Products",
+                nav3: "03. Our Cuisine",
+                reserve: "Book a Table",
+                welcome: "Welcome",
+                heroTitle: "An exceptional table, <br><span class=\"text-gold-600 gold-glow italic\">just for you</span>.",
+                heroText: "Seasonal cuisine, prepared every day from fresh, carefully selected produce sourced from partner producers. Dine in or take away — every dish is prepared to order with care.",
+                findUs: "FIND US",
+                address1: "12 Example Street",
+                address2: "75000 Paris, France",
+                itinerary: "Directions",
+                itineraryAria: "Open the route in Google Maps",
+                hours: "Opening hours",
+                days1: "Monday – Friday",
+                hours1: "11am–2:30pm · 6pm–10pm",
+                days2: "Saturday",
+                hours2: "11am–3pm · 6pm–11pm",
+                days3: "Sunday",
+                hours3: "11am–3pm",
+                menuBtn: "Our Menu",
+                callAria: "Call us",
+                mailAria: "Email us",
+                section2Label: "02 / Origin & Freshness",
+                section2Title: "Fresh Products Every Day",
+                section2Text: "Every morning, our team selects and prepares the produce for your meal.",
+                seasonalTitle: "Seasonal Produce",
+                seasonalText: "Fruits, vegetables and herbs selected at peak ripeness from partner producers.",
+                localTitle: "Local Sourcing",
+                localText: "Meats, fish and cheeses from local artisans and suppliers.",
+                section3Label: "03 / Our Cuisine",
+                section3Title: "Dine In or Take Away",
+                section3Text: "Settle into our dining room for a warm, friendly moment, or enjoy our takeaway dishes. Our menu evolves with the seasons and our suggestions change every week. Every order is prepared to order, with care.",
+                experienceLabel: "A Unique Experience",
+                bookTitle: "Book Now!",
+                bookText: "An attentive team, cuisine prepared to order.",
+                bookBtn: "Reserve a Table",
+                footer: "© 2026 Your Restaurant — All rights reserved"
+            },
+            fr: {
+                _title: "Votre Restaurant",
+                _lang: "fr",
+                nav1: "01. Notre Maison",
+                nav2: "02. Nos Produits",
+                nav3: "03. Notre Cuisine",
+                reserve: "Réserver",
+                welcome: "Bienvenue",
+                heroTitle: "Une table d'exception, <br><span class=\"text-gold-600 gold-glow italic\">pour vous</span>.",
+                heroText: "Une cuisine de saison, préparée chaque jour à partir de produits frais et sélectionnés auprès de producteurs partenaires. Sur place ou à emporter, chaque plat est préparé à la minute avec soin.",
+                findUs: "NOUS TROUVER",
+                address1: "12 rue de l'Exemple",
+                address2: "75000 Paris, France",
+                itinerary: "Itinéraire",
+                itineraryAria: "Ouvrir l'itinéraire dans Google Maps",
+                hours: "Nos horaires",
+                days1: "Lundi – Vendredi",
+                hours1: "11h–14h30 · 18h–22h",
+                days2: "Samedi",
+                hours2: "11h–15h · 18h–23h",
+                days3: "Dimanche",
+                hours3: "11h–15h",
+                menuBtn: "Notre carte",
+                callAria: "Nous appeler",
+                mailAria: "Nous écrire",
+                section2Label: "02 / Origine & Fraîcheur",
+                section2Title: "Des Produits Frais du Jour",
+                section2Text: "Chaque matin, notre équipe sélectionne et prépare les produits de votre repas.",
+                seasonalTitle: "Produits de Saison",
+                seasonalText: "Fruits, légumes et herbes sélectionnés à maturité, auprès de producteurs partenaires.",
+                localTitle: "Circuits Courts",
+                localText: "Viandes, poissons et fromages issus d'artisans et fournisseurs locaux.",
+                section3Label: "03 / Notre Cuisine",
+                section3Title: "Sur Place ou à Emporter",
+                section3Text: "Installez-vous dans notre salle pour un moment convivial, ou profitez de nos plats à emporter. Notre carte évolue au fil des saisons et nos suggestions changent chaque semaine. Chaque commande est préparée à la minute, avec soin.",
+                experienceLabel: "L'Expérience Unique",
+                bookTitle: "Réservez dès maintenant !",
+                bookText: "Une équipe attentive, une cuisine préparée à la minute.",
+                bookBtn: "Réserver une table",
+                footer: "© 2026 Votre Restaurant — Tous droits réservés"
+            }
+        };
+
+        // Sauvegarde du HTML original français (premier rendu) pour pouvoir revenir en arrière
+        const originalFr = {};
+        document.querySelectorAll('[data-i18n], [data-i18n-html]').forEach(el => {
+            const key = el.getAttribute('data-i18n') || el.getAttribute('data-i18n-html');
+            if (!(key in originalFr)) originalFr[key] = el.innerHTML;
+        });
+
+        function setLanguage(lang) {
+            const dict = translations[lang];
+            if (!dict) return;
+
+            document.documentElement.lang = dict._lang;
+            document.title = dict._title;
+            localStorage.setItem('site-lang', lang);
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                el.textContent = dict[key] !== undefined ? dict[key] : (originalFr[key] || el.textContent);
+            });
+
+            document.querySelectorAll('[data-i18n-html]').forEach(el => {
+                const key = el.getAttribute('data-i18n-html');
+                el.innerHTML = dict[key] !== undefined ? dict[key] : (originalFr[key] || el.innerHTML);
+            });
+
+            document.querySelectorAll('[data-i18n-aria]').forEach(el => {
+                const key = el.getAttribute('data-i18n-aria');
+                el.setAttribute('aria-label', dict[key] !== undefined ? dict[key] : el.getAttribute('aria-label'));
+            });
+
+            document.getElementById('btn-fr').classList.toggle('active', lang === 'fr');
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+        }
+
+        // Langue mémorisée au chargement (français par défaut)
+        document.addEventListener('DOMContentLoaded', () => {
+            const saved = localStorage.getItem('site-lang');
+            if (saved && saved !== 'fr') setLanguage(saved);
+        });
 
         // ================= GESTION FLUIDE DE LA VIDÉO PAR GSAP SCROLLTRIGGER =================
         gsap.registerPlugin(ScrollTrigger);
