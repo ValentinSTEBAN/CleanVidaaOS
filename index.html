@@ -1,12 +1,456 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr" id="htmlRoot">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main</title>
+    <title data-fr="Nos Créations" data-en="Our Work">Nos Créations</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+            background-color: #f5f5f7;
+            color: #1d1d1f;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            padding: 60px 20px;
+            -webkit-font-smoothing: antialiased;
+            position: relative;
+        }
+
+        .lang-btn {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            padding: 8px 16px;
+            border-radius: 980px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #1d1d1f;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            z-index: 10;
+        }
+
+        .lang-btn:hover {
+            background: #e8e8ed;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            margin-top: 20px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 600;
+            letter-spacing: -0.015em;
+            margin-bottom: 12px;
+        }
+
+        p.subtitle {
+            font-size: 1.25rem;
+            color: #86868b;
+            font-weight: 400;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 480px));
+            gap: 32px;
+            width: 100%;
+            max-width: 1024px;
+            justify-content: center;
+            margin-bottom: 90px;
+        }
+
+        .carte {
+            background: #ffffff;
+            border-radius: 24px;
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .carte:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.18);
+        }
+
+        .image-wrapper {
+            width: 100%;
+            height: 320px;
+            overflow: hidden;
+            background-color: #e8e8ed;
+        }
+
+        .carte img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .carte:hover img {
+            transform: scale(1.03);
+        }
+
+        .content {
+            padding: 28px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .content h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+
+        .content .cta {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #0066cc;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .section-carrousel {
+            width: 100%;
+            max-width: 1024px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 90px;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 32px;
+            letter-spacing: -0.01em;
+            text-align: center;
+        }
+
+        .carousel-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        #carousel {
+            display: flex;
+            gap: 24px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            padding: 12px 4px 32px 4px;
+            -ms-overflow-style: none; 
+            scrollbar-width: none; 
+        }
+
+        #carousel::-webkit-scrollbar {
+            display: none; 
+        }
+
+        .eltc {
+            flex: 0 0 calc(100% - 40px);
+            max-width: 380px;
+            min-height: 220px;
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 36px 28px;
+            scroll-snap-align: center;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .eltc:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.14);
+        }
+
+        .eltc .tag {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #86868b;
+        }
+
+        .eltc p {
+            font-size: 1.35rem;
+            font-weight: 600;
+            line-height: 1.35;
+            letter-spacing: -0.015em;
+            color: #1d1d1f;
+        }
+
+        .carousel-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 10px;
+        }
+
+        .nav-btn {
+            background: #e8e8ed;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: #1d1d1f;
+            transition: background 0.2s ease, transform 0.1s ease;
+        }
+
+        .nav-btn:hover {
+            background: #d2d2d7;
+        }
+
+        .nav-btn:active {
+            transform: scale(0.95);
+        }
+
+        .dots {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #d2d2d7;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .dot.active {
+            background-color: #1d1d1f;
+            transform: scale(1.3);
+        }
+
+        #Contact {
+            width: 100%;
+            max-width: 600px;
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 40px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        #Contact h2 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            letter-spacing: -0.015em;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .contact-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #0066cc;
+            text-decoration: none;
+            padding: 12px 20px;
+            background-color: #f5f5f7;
+            border-radius: 12px;
+            width: 100%;
+            justify-content: center;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .contact-item:hover {
+            background-color: #e8e8ed;
+            transform: translateY(-2px);
+        }
+
+        .contact-item span {
+            color: #1d1d1f;
+        }
+    </style>
 </head>
 <body>
-    <a href="restaurant.html">Restaurant</a>
-    <a href="coaching.html">Coaching</a>
+    <button class="lang-btn" id="langToggle"><span id="langText">English</span></button>
+
+    <header>
+        <h1 data-fr="Nos Créations." data-en="Our Work.">Nos Créations.</h1>
+        <p class="subtitle" data-fr="Découvrez nos derniers sites vitrines sur mesure." data-en="Discover our latest custom showcase websites.">Découvrez nos derniers sites vitrines sur mesure.</p>
+    </header>
+
+    <main class="grid">
+        <a href="restaurant.html" class="carte">
+            <div class="image-wrapper">
+                <img src="https://i.pinimg.com/1200x/c2/f2/b9/c2f2b985bd973b4c2942aa59a29822a9.jpg" alt="Aperçu Restaurant">
+            </div>
+            <div class="content">
+                <h2 data-fr="Restaurant" data-en="Restaurant">Restaurant</h2>
+                <span class="cta" data-fr="Découvrir ↗" data-en="Discover ↗">Découvrir ↗</span>
+            </div>
+        </a>
+
+        <a href="coaching.html" class="carte">
+            <div class="image-wrapper">
+                <img src="https://i.pinimg.com/1200x/d3/ec/6e/d3ec6ebba25921a6867bcd4525ddaa4c.jpg" alt="Aperçu Coaching">
+            </div>
+            <div class="content">
+                <h2 data-fr="Coaching" data-en="Coaching">Coaching</h2>
+                <span class="cta" data-fr="Découvrir ↗" data-en="Discover ↗">Découvrir ↗</span>
+            </div>
+        </a>
+    </main>
+
+    <section class="section-carrousel">
+        <h2 class="section-title" data-fr="Pourquoi nos sites font la différence." data-en="Why our websites make a difference.">Pourquoi nos sites font la différence.</h2>
+        
+        <div class="carousel-wrapper">
+            <div id="carousel">
+                <div class="eltc">
+                    <span class="tag" data-fr="International" data-en="International">International</span>
+                    <p data-fr="Multilingue pour toucher une audience sans frontières." data-en="Multilingual to reach a borderless audience.">Multilingue pour toucher une audience sans frontières.</p>
+                </div>
+                <div class="eltc">
+                    <span class="tag" data-fr="Design" data-en="Design">Design</span>
+                    <p data-fr="100% aligné sur votre Direction Artistique." data-en="100% aligned with your Art Direction.">100% aligné sur votre Direction Artistique.</p>
+                </div>
+                <div class="eltc">
+                    <span class="tag" data-fr="Performance" data-en="Performance">Performance</span>
+                    <p data-fr="Disponible rapidement et entièrement sur mesure." data-en="Available quickly and fully customized.">Disponible rapidement et entièrement sur mesure.</p>
+                </div>
+                <div class="eltc">
+                    <span class="tag" data-fr="Suivi" data-en="Support">Suivi</span>
+                    <p data-fr="Jusqu'à 2 ans de mises à jour régulières." data-en="Up to 2 years of regular updates.">Jusqu'à 2 ans de mises à jour régulières.</p>
+                </div>
+                <div class="eltc">
+                    <span class="tag" data-fr="Intégration" data-en="Integration">Intégration</span>
+                    <p data-fr="Connexion fluide à vos messageries et outils métier." data-en="Seamless connection to your messaging and business tools.">Connexion fluide à vos messageries et outils métier.</p>
+                </div>
+            </div>
+
+            <div class="carousel-controls">
+                <button class="nav-btn" id="prevBtn" aria-label="Précédent">‹</button>
+                <div class="dots" id="dotsContainer"></div>
+                <button class="nav-btn" id="nextBtn" aria-label="Suivant">›</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="Contact">
+        <h2 data-fr="Un projet en tête ?" data-en="Got a project in mind?">Un projet en tête ?</h2>
+        <div class="contact-info">
+            <a href="mailto:mon-entreprise@gmail.com" class="contact-item">
+                <span>mon-entreprise@gmail.com</span>
+            </a>
+            <a href="tel:0611223344" class="contact-item">
+                <span>06 11 22 33 44</span>
+            </a>
+        </div>
+    </section>
+
+    <script>
+        const langToggle = document.getElementById('langToggle');
+        const langText = document.getElementById('langText');
+        const htmlRoot = document.getElementById('htmlRoot');
+        let currentLang = 'fr';
+
+        langToggle.addEventListener('click', () => {
+            currentLang = currentLang === 'fr' ? 'en' : 'fr';
+            htmlRoot.setAttribute('lang', currentLang);
+            
+            langText.textContent = currentLang === 'fr' ? 'English' : 'Français';
+
+            document.querySelectorAll('[data-fr]').forEach(el => {
+                el.textContent = el.getAttribute(`data-${currentLang}`);
+            });
+        });
+
+        const carousel = document.getElementById('carousel');
+        const cards = document.querySelectorAll('.eltc');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const dotsContainer = document.getElementById('dotsContainer');
+
+        const getCardWidth = () => cards[0].offsetWidth + 24;
+
+        cards.forEach((_, index) => {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if (index === 0) dot.classList.add('active');
+            
+            dot.addEventListener('click', () => {
+                carousel.scrollTo({
+                    left: index * getCardWidth(),
+                    behavior: 'smooth'
+                });
+            });
+
+            dotsContainer.appendChild(dot);
+        });
+
+        const dots = document.querySelectorAll('.dot');
+
+        carousel.addEventListener('scroll', () => {
+            const scrollPosition = carousel.scrollLeft;
+            const activeIndex = Math.round(scrollPosition / getCardWidth());
+
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === activeIndex);
+            });
+        });
+
+        prevBtn.addEventListener('click', () => {
+            carousel.scrollBy({ left: -getCardWidth(), behavior: 'smooth' });
+        });
+
+        nextBtn.addEventListener('click', () => {
+            carousel.scrollBy({ left: getCardWidth(), behavior: 'smooth' });
+        });
+    </script>
 </body>
 </html>
