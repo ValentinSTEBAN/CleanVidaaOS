@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Votre Restaurant</title>
 
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -33,12 +32,10 @@
         }
     </script>
 
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap" rel="stylesheet">
 
-    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -49,7 +46,6 @@
             overflow-x: hidden;
         }
 
-        /* ============ VIDÉO EN FOND OPTIMISÉE GPU ============ */
         #video-stage {
             position: fixed;
             inset: 0;
@@ -68,7 +64,6 @@
             height: auto;
             object-fit: cover;
             pointer-events: none;
-            /* Accélération matérielle indispensable pour éviter les saccades */
             will-change: transform;
             transform-style: preserve-3d;
         }
@@ -137,7 +132,6 @@
             transform: translateY(0);
         }
 
-        /* ===== SÉLECTEUR DE LANGUE ===== */
         .lang-switch {
             display: inline-flex;
             align-items: center;
@@ -168,8 +162,6 @@
         .lang-btn:not(.active):hover {
             color: #f0d488;
         }
-
-        /* ===== RÉSEAUX SOCIAUX ===== */
 
         .social-links {
             display: flex;
@@ -212,7 +204,6 @@
             white-space: nowrap;
         }
 
-        /* Version compacte pour le footer sombre */
         .footer-social .social-link {
             background: rgba(255, 255, 255, 0.06);
             border-color: rgba(201, 162, 39, 0.4);
@@ -242,7 +233,6 @@
             }
         }
 
-        /* ===== CARTE ADRESSE + HORAIRES ===== */
 
         .location-card {
             display: block;
@@ -336,7 +326,6 @@
             color: #fff;
         }
 
-        /* Séparateur doré */
         .location-divider {
             height: 1px;
             margin: 17px 0;
@@ -348,7 +337,6 @@
             );
         }
 
-        /* Horaires */
         .opening-hours {
             display: flex;
             flex-direction: column;
@@ -387,7 +375,6 @@
             white-space: nowrap;
         }
 
-        /* Téléphones */
         @media (max-width: 480px) {
             .location-card {
                 padding: 14px;
@@ -430,7 +417,6 @@
             }
         }
 
-        /* ===== HEADER RESPONSIVE ===== */
 
         header {
             gap: 16px;
@@ -445,13 +431,11 @@
             white-space: nowrap;
         }
 
-        /* Bouton Réserver */
         .header-reserve {
             flex-shrink: 0;
             white-space: nowrap;
         }
 
-        /* Téléphones */
         @media (max-width: 640px) {
             header {
                 padding: 14px 16px !important;
@@ -476,7 +460,6 @@
             }
         }
 
-        /* Très petits téléphones */
         @media (max-width: 360px) {
             header {
                 padding: 12px 10px !important;
@@ -503,14 +486,12 @@
 </head>
 <body class="bg-charcoal antialiased selection:bg-gold-500 selection:text-white bg-grain">
 
-    <!-- Vidéo de fond (remplacer par l'ambiance du restaurant) -->
     <div id="video-stage">
         <video id="burger-video" muted playsinline preload="auto" src="burger4k.mp4"></video>
         <div id="video-shade"></div>
     </div>
     <div id="video-progress"></div>
 
-    <!-- Navigation Header -->
     <header class="fixed top-0 left-0 w-full z-50 px-8 py-5 flex justify-between items-center backdrop-blur-md bg-black/40 border-b border-gold-500/25">
         <div class="header-logo flex items-center space-x-4">
             <span class="text-xl md:text-2xl font-serif font-bold tracking-[0.25em] text-ivory">
@@ -525,7 +506,6 @@
         </div>
 
         <div class="flex items-center gap-4">
-            <!-- Sélecteur de langue FR / EN -->
             <div class="lang-switch" role="group" aria-label="Language / Langue">
                 <button type="button" class="lang-btn active" id="btn-fr" onclick="setLanguage('fr')">FR</button>
                 <button type="button" class="lang-btn" id="btn-en" onclick="setLanguage('en')">EN</button>
@@ -537,10 +517,8 @@
         </div>
     </header>
 
-    <!-- Scroll Sections -->
     <main class="relative z-20">
 
-        <!-- SECTION 1: HERO -->
         <section id="hero" class="min-h-screen flex flex-col justify-center items-start px-6 md:px-20 max-w-7xl mx-auto pt-20">
             <div class="max-w-xl glass-luxury p-10 md:p-14 rounded-3xl">
                 <div class="flex items-center space-x-3 mb-6">
@@ -557,7 +535,6 @@
                 </p>
 
                 <div class="location-card">
-                    <!-- Adresse et bouton Google Maps (remplacer le lien par celui de votre établissement) -->
                     <div class="location-top">
                         <div class="location-icon">
                             <i class="fa-solid fa-location-dot"></i>
@@ -588,10 +565,8 @@
                         </a>
                     </div>
 
-                    <!-- Séparateur -->
                     <div class="location-divider"></div>
 
-                    <!-- Horaires d'ouverture (à adapter) -->
                     <div class="opening-hours">
                         <div class="opening-title">
                             <i class="fa-regular fa-clock"></i>
@@ -622,7 +597,6 @@
                     </a>
                 </div>
 
-                <!-- Réseaux sociaux & contact -->
                 <div class="social-links">
                     <a class="social-link" href="https://www.instagram.com/votre-compte" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                         <i class="fa-brands fa-instagram"></i>
@@ -644,7 +618,6 @@
             </div>
         </section>
 
-        <!-- SECTION 2: PRODUITS FRAIS -->
         <section id="ingredients" class="min-h-screen flex items-center justify-end px-6 md:px-20 max-w-7xl mx-auto">
             <div class="max-w-md glass-luxury p-10 rounded-3xl reveal">
                 <span class="text-burgundy text-[11px] font-bold tracking-[0.25em] uppercase block mb-3" data-i18n="section2Label">02 / Origine &amp; Fraîcheur</span>
@@ -671,7 +644,6 @@
             </div>
         </section>
 
-        <!-- SECTION 3: CUISINE & SUR MESURE -->
         <section id="savoirfaire" class="min-h-screen flex items-center justify-start px-6 md:px-20 max-w-7xl mx-auto">
             <div class="max-w-md glass-luxury p-10 rounded-3xl reveal">
                 <span class="text-burgundy text-[11px] font-bold tracking-[0.25em] uppercase block mb-3" data-i18n="section3Label">03 / Notre Cuisine</span>
@@ -685,7 +657,6 @@
             </div>
         </section>
 
-        <!-- SECTION 4: RÉSERVATION & COMMANDE -->
         <section id="degustation" class="min-h-screen flex flex-col justify-center items-center text-center px-6 max-w-4xl mx-auto">
             <div class="glass-luxury p-12 md:p-16 rounded-[2rem] border border-gold-500/40 w-full relative overflow-hidden reveal">
                 <div class="absolute -top-24 -right-24 w-64 h-64 bg-gold-400/20 rounded-full blur-3xl pointer-events-none"></div>
@@ -702,7 +673,6 @@
                     </button>
                 </div>
 
-                <!-- Réseaux sociaux & contact (version sombre) -->
                 <div class="footer-social flex flex-wrap justify-center gap-3 mt-10">
                     <a class="social-link" href="https://www.instagram.com/votre-compte" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                         <i class="fa-brands fa-instagram"></i>
@@ -726,7 +696,6 @@
 
     </main>
 
-    <!-- GSAP & ScrollTrigger -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
@@ -739,7 +708,6 @@
             window.location.href = "carte.pdf";
         }
 
-        // ================= TRADUCTIONS FR / EN =================
         const translations = {
             en: {
                 _title: "Your Restaurant",
@@ -825,7 +793,6 @@
             }
         };
 
-        // Sauvegarde du HTML original français (premier rendu) pour pouvoir revenir en arrière
         const originalFr = {};
         document.querySelectorAll('[data-i18n], [data-i18n-html]').forEach(el => {
             const key = el.getAttribute('data-i18n') || el.getAttribute('data-i18n-html');
@@ -859,13 +826,11 @@
             document.getElementById('btn-en').classList.toggle('active', lang === 'en');
         }
 
-        // Langue mémorisée au chargement (français par défaut)
         document.addEventListener('DOMContentLoaded', () => {
             const saved = localStorage.getItem('site-lang');
             if (saved && saved !== 'fr') setLanguage(saved);
         });
 
-        // ================= GESTION FLUIDE DE LA VIDÉO PAR GSAP SCROLLTRIGGER =================
         gsap.registerPlugin(ScrollTrigger);
 
         const video = document.getElementById('burger-video');
@@ -875,13 +840,12 @@
         video.addEventListener('loadedmetadata', () => {
             videoDuration = video.duration;
 
-            // Objet proxy pour animer le currentTime de la vidéo en douceur avec GSAP
             let tl = gsap.timeline({
                 scrollTrigger: {
                     trigger: "body",
                     start: "top top",
                     end: "bottom bottom",
-                    scrub: 1.5, // Inertie lissée (plus c'est haut, plus c'est doux et sans saccade)
+                    scrub: 1.5,
                     onUpdate: (self) => {
                         if (progressBar) {
                             progressBar.style.width = (self.progress * 100) + '%';
@@ -890,14 +854,12 @@
                 }
             });
 
-            // On demande à GSAP de faire varier le currentTime de 0 à la fin de la vidéo
             tl.to(video, {
                 currentTime: videoDuration - 0.1,
                 ease: "none"
             });
         });
 
-        // Zoom cinématique fluide en arrière-plan
         gsap.to('#burger-video', {
             scale: 1.08,
             ease: 'none',
@@ -909,7 +871,6 @@
             }
         });
 
-        // ================= REVEAL CARDS =================
         function initRevealCards() {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(e => {
