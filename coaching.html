@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coatch — Votre coach sportif</title>
+<style>
+  :root {
+    --bg: #000;
+    --surface: #101010;
+    --text: #f5f5f7;
+    --muted: #86868b;
+    --accent: #2997ff;
+    --radius: 22px;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Inter, system-ui, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+
+  /* NAV */
+  header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    backdrop-filter: saturate(180%) blur(20px);
+    background: rgba(0,0,0,.72);
+    border-bottom: 1px solid rgba(255,255,255,.08);
+  }
+  nav {
+    max-width: 1024px; margin: 0 auto; padding: 0 22px;
+    height: 52px; display: flex; align-items: center; justify-content: center; gap: 42px;
+  }
+  nav a {
+    font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+    color: rgba(255,255,255,.6); transition: color .25s;
+  }
+  nav a:hover { color: #fff; }
+  .logo { font-weight: 700; font-size: 15px; letter-spacing: .02em; color: #fff; margin-right: auto; text-transform: none !important; letter-spacing: .02em !important; }
+  .logo span { color: var(--accent); }
+
+  /* Header mobile */
+  .nav-right { display: flex; align-items: center; gap: 10px; }
+  .burger {
+    display: none; width: 40px; height: 40px; border: none; cursor: pointer;
+    background: transparent; position: relative; z-index: 110; padding: 10px;
+  }
+  .burger span {
+    display: block; width: 100%; height: 1.6px; background: #fff; border-radius: 2px;
+    transition: transform .3s cubic-bezier(.2,.8,.2,1), opacity .2s;
+  }
+  .burger span + span { margin-top: 6px; }
+  .burger.open span:nth-child(1) { transform: translateY(7.6px) rotate(45deg); }
+  .burger.open span:nth-child(2) { opacity: 0; }
+  .burger.open span:nth-child(3) { transform: translateY(-7.6px) rotate(-45deg); }
+  .mobile-menu {
+    position: fixed; top: 52px; left: 0; right: 0; z-index: 99;
+    background: rgba(0,0,0,.9); backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    display: flex; flex-direction: column; padding: 14px 24px 22px; gap: 4px;
+    transform: translateY(-8px); opacity: 0; pointer-events: none;
+    transition: transform .35s cubic-bezier(.2,.8,.2,1), opacity .3s;
+  }
+  .mobile-menu.open { transform: none; opacity: 1; pointer-events: auto; }
+  .mobile-menu a {
+    font-size: 15px; font-weight: 600; letter-spacing: .02em; text-transform: none;
+    color: var(--text); padding: 13px 6px; border-bottom: 1px solid rgba(255,255,255,.06);
+  }
+  .mobile-menu a:last-of-type { border-bottom: none; }
+  .mobile-menu .m-cta { color: var(--accent); }
+  @media (max-width: 720px) {
+    nav > a[data-i18n] { display: none; }
+    .burger { display: block; }
+  }
+  .cta-nav {
+    font-size: 11px; font-weight: 600; color: #fff !important;
+    background: var(--accent); padding: 7px 14px; border-radius: 980px;
+    letter-spacing: .08em; text-transform: uppercase; transition: filter .2s;
+  }
+  .cta-nav:hover { filter: brightness(1.15); }
+  .lang-switch {
+    background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14);
+    color: var(--muted); font-family: inherit; font-size: 11px; font-weight: 600;
+    letter-spacing: .06em; padding: 6px 12px; border-radius: 980px; cursor: pointer;
+    transition: background .2s, color .2s; text-transform: uppercase;
+  }
+  .lang-switch:hover { background: rgba(255,255,255,.16); color: #fff; }
+  .lang-switch.active { background: rgba(41,151,255,.2); color: #fff; border-color: rgba(41,151,255,.5); }
+
+  section { padding: 120px 22px; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; text-align: center;
+    background:
+      radial-gradient(1200px 600px at 50% -10%, rgba(41,151,255,.25), transparent 60%),
+      radial-gradient(800px 500px at 80% 100%, rgba(94,92,230,.18), transparent 60%),
+      #000;
+    padding-top: 140px;
+  }
+  .hero .eyebrow {
+    font-size: 14px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 18px;
+  }
+  h1 {
+    font-size: clamp(44px, 8vw, 96px); font-weight: 700; line-height: 1.05;
+    letter-spacing: -.02em;
+    background: linear-gradient(180deg, #fff 30%, #a1a1a6);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .hero p.sub {
+    margin-top: 22px; max-width: 560px; font-size: clamp(17px, 2.4vw, 22px);
+    color: var(--muted); line-height: 1.5;
+  }
+  .hero-links { margin-top: 34px; display: flex; gap: 28px; flex-wrap: wrap; justify-content: center; }
+  .link-pill {
+    font-size: 15px; color: var(--accent); font-weight: 500;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .link-pill:hover { text-decoration: underline; }
+  .hero .stats {
+    margin-top: 70px; display: flex; gap: 60px; flex-wrap: wrap; justify-content: center;
+  }
+  .hero .stats div { text-align: center; }
+  .hero .stats .num { font-size: 40px; font-weight: 700; letter-spacing: -.02em; }
+  .hero .stats .lbl { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .12em; margin-top: 4px; }
+
+  /* SECTION HEADING */
+  .heading { text-align: center; margin-bottom: 70px; }
+  .heading .eyebrow { font-size: 13px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+  h2 { font-size: clamp(32px, 5vw, 56px); font-weight: 700; letter-spacing: -.02em; line-height: 1.08; }
+  .heading p { margin: 18px auto 0; max-width: 560px; color: var(--muted); font-size: 18px; line-height: 1.5; }
+
+  /* ACTIVITÉ — cards */
+  .grid {
+    max-width: 1024px; margin: 0 auto; display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px;
+  }
+  .card {
+    background: var(--surface); border-radius: var(--radius); padding: 44px 34px;
+    border: 1px solid rgba(255,255,255,.06);
+    transition: transform .35s cubic-bezier(.2,.8,.2,1), border-color .35s;
+  }
+  .card:hover { transform: translateY(-8px); border-color: rgba(41,151,255,.4); }
+  .card .icon {
+    width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center;
+    background: linear-gradient(135deg, rgba(41,151,255,.25), rgba(94,92,230,.25));
+    margin-bottom: 22px;
+  }
+  .card h3 { font-size: 24px; font-weight: 600; letter-spacing: -.01em; margin-bottom: 10px; }
+  .card p { color: var(--muted); font-size: 15px; line-height: 1.55; }
+
+  /* BIG QUOTE BAND */
+  .quote {
+    text-align: center; padding: 140px 22px;
+    background: radial-gradient(900px 400px at 50% 50%, rgba(41,151,255,.12), transparent 70%), #000;
+  }
+  .quote blockquote {
+    font-size: clamp(28px, 4.5vw, 48px); font-weight: 600; letter-spacing: -.015em;
+    line-height: 1.2; max-width: 900px; margin: 0 auto;
+  }
+  .quote cite { display: block; margin-top: 24px; font-style: normal; color: var(--muted); font-size: 16px; }
+
+  /* OFFRES */
+  .offers { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; max-width: 1024px; margin: 0 auto; align-items: stretch; }
+  .offer {
+    background: var(--surface); border-radius: var(--radius); padding: 40px 34px;
+    border: 1px solid rgba(255,255,255,.06); display: flex; flex-direction: column;
+    transition: transform .35s cubic-bezier(.2,.8,.2,1), border-color .35s;
+  }
+  .offer:hover { transform: translateY(-8px); border-color: rgba(255,255,255,.18); }
+  .offer.featured {
+    background: linear-gradient(180deg, rgba(41,151,255,.14), rgba(16,16,16,1) 55%);
+    border-color: rgba(41,151,255,.5);
+  }
+  .offer .tag {
+    align-self: flex-start; font-size: 11px; font-weight: 600; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--accent); background: rgba(41,151,255,.12);
+    padding: 5px 12px; border-radius: 980px; margin-bottom: 18px;
+  }
+  .offer h3 { font-size: 26px; font-weight: 600; margin-bottom: 6px; }
+  .offer .price { font-size: 44px; font-weight: 700; letter-spacing: -.02em; margin: 14px 0 4px; }
+  .offer .price small { font-size: 15px; font-weight: 400; color: var(--muted); }
+  .offer ul { list-style: none; margin: 26px 0 34px; display: grid; gap: 12px; flex: 1; }
+  .offer li { font-size: 15px; color: #d2d2d7; display: flex; gap: 10px; align-items: flex-start; line-height: 1.4; }
+  .offer li::before { content: "✓"; color: var(--accent); font-weight: 700; }
+  .btn {
+    display: block; text-align: center; padding: 14px 0; border-radius: 980px;
+    font-size: 15px; font-weight: 600; background: var(--accent); color: #fff;
+    transition: filter .2s; cursor: pointer; border: none; font-family: inherit;
+  }
+  .btn:hover { filter: brightness(1.15); }
+  .btn.ghost { background: rgba(255,255,255,.1); }
+  .btn.ghost:hover { background: rgba(255,255,255,.16); }
+
+  /* RDV — formulaire aéré */
+  .rdv-wrap { max-width: 760px; margin: 0 auto; }
+  .rdv {
+    background: var(--surface); border: 1px solid rgba(255,255,255,.07);
+    border-radius: 28px; padding: 48px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 22px;
+  }
+  .rdv input, .rdv select, .rdv textarea {
+    width: 100%; padding: 18px 20px; border-radius: 16px; font-size: 16px;
+    background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12);
+    color: var(--text); outline: none; transition: border-color .25s;
+    font-family: inherit;
+  }
+  .rdv input::placeholder, .rdv textarea::placeholder { color: rgba(255,255,255,.45); }
+  .rdv input:focus, .rdv select:focus, .rdv textarea:focus { border-color: var(--accent); }
+  .rdv select {
+    appearance: none; -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' stroke='%2386868b' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 20px center;
+    padding-right: 46px; cursor: pointer; color: var(--text);
+  }
+  /* Options visibles : fond sombre, texte clair */
+  .rdv select option, .rdv select optgroup { background: #101010; color: #f5f5f7; }
+  .rdv select option:disabled { color: #86868b; }
+  .rdv textarea { min-height: 130px; resize: vertical; }
+  .rdv .full { grid-column: 1 / -1; }
+  .rdv .btn { margin-top: 8px; }
+  .form-note { grid-column: 1 / -1; font-size: 13px; color: var(--muted); text-align: center; margin-top: 2px; }
+  @media (max-width: 640px) { .rdv { padding: 32px 22px; grid-template-columns: 1fr; } }
+  .success {
+    padding: 30px 10px; text-align: center; font-size: 22px; font-weight: 600;
+    color: var(--accent); grid-column: 1 / -1;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid rgba(255,255,255,.08); padding: 40px 22px 60px;
+    color: var(--muted); font-size: 13px; text-align: center; line-height: 1.8;
+  }
+  footer a { color: var(--accent); }
+
+  /* Reveal on scroll */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s, transform .8s cubic-bezier(.2,.8,.2,1); }
+  .reveal.in { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="#hero" class="logo">Co<span>.</span>tch</a>
+    <a href="#activite" data-i18n="nav1">01. Mon activité</a>
+    <a href="#offres" data-i18n="nav2">02. Les offres</a>
+    <a href="#rdv" data-i18n="nav3">03. Prendre rendez-vous</a>
+    <div class="nav-right">
+      <button class="lang-switch" id="langFr" onclick="setLang('fr')">FR</button>
+      <button class="lang-switch" id="langEn" onclick="setLang('en')">EN</button>
+      <a href="#rdv" class="cta-nav" data-i18n="navCta">Réserver</a>
+      <button class="burger" id="burger" aria-label="Menu" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#activite" data-i18n="nav1" onclick="toggleMenu()">01. Mon activité</a>
+    <a href="#offres" data-i18n="nav2" onclick="toggleMenu()">02. Les offres</a>
+    <a href="#rdv" class="m-cta" data-i18n="nav3" onclick="toggleMenu()">03. Prendre rendez-vous</a>
+  </div>
+</header>
+
+<section class="hero" id="hero">
+  <div class="eyebrow" data-i18n="heroEyebrow">Coaching personnel · Paris &amp; en ligne</div>
+  <h1><span data-i18n="heroTitle1">Dépassez vos limites.</span><br><span data-i18n="heroTitle2">Le corps suit.</span></h1>
+  <p class="sub" data-i18n="heroSub">Un accompagnement sur mesure, pensé pour vos objectifs, votre emploi du temps et votre niveau. Avec vous, à chaque séance.</p>
+  <div class="hero-links">
+    <a href="#offres" class="link-pill"><span data-i18n="heroLink1">Découvrir les offres</span> →</a>
+    <a href="#rdv" class="link-pill"><span data-i18n="heroLink2">Réserver une séance découverte</span> →</a>
+  </div>
+  <div class="stats">
+    <div><div class="num" data-i18n="stat1">7 ans</div><div class="lbl" data-i18n="stat1l">d'expérience</div></div>
+    <div><div class="num">300+</div><div class="lbl" data-i18n="stat2l">élèves accompagnés</div></div>
+    <div><div class="num">96 %</div><div class="lbl" data-i18n="stat3l">d'objectifs atteints</div></div>
+  </div>
+</section>
+
+<section id="activite">
+  <div class="heading reveal">
+    <div class="eyebrow" data-i18n="actEyebrow">01 — Mon activité</div>
+    <h2 data-i18n="actTitle">Un coaching. Trois piliers.</h2>
+    <p data-i18n="actSub">Programme, suivi et motivation : tout est construit autour de vous, pas l'inverse.</p>
+  </div>
+  <div class="grid">
+    <div class="card reveal">
+      <div class="icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M6 7v10M12 4v16M18 7v10" stroke="#2997ff" stroke-width="2.4" stroke-linecap="round"/></svg></div>
+      <h3 data-i18n="card1t">Entraînement</h3>
+      <p data-i18n="card1p">Séances individualisées : renforcement, cardio, mobilité. Chaque mouvement a une intention, chaque séance un objectif mesurable.</p>
+    </div>
+    <div class="card reveal">
+      <div class="icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 21c-5 0-8-3.5-8-8 5 0 8 3.5 8 8Zm0 0c5 0 8-3.5 8-8-5 0-8 3.5-8 8Zm0-4V4" stroke="#2997ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <h3 data-i18n="card2t">Nutrition</h3>
+      <p data-i18n="card2p">Conseils alimentaires simples et durables. Pas de régime extrême : des habitudes que vous tenez, qui soutiennent vos performances.</p>
+    </div>
+    <div class="card reveal">
+      <div class="icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M3 12h4l2-5 4 10 2-5h6" stroke="#2997ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <h3 data-i18n="card3t">Suivi &amp; data</h3>
+      <p data-i18n="card3p">Analyses de progression régulières : force, endurance, composition corporelle. Vos résultats, mesurés, pas devinés.</p>
+    </div>
+  </div>
+</section>
+
+<section class="quote">
+  <blockquote class="reveal" data-i18n="quote">« J'ai perdu 12 kilos en six mois, sans jamais avoir l'impression d'être seul. Chaque séance est calibrée, chaque progrès est vu. »</blockquote>
+  <cite class="reveal" data-i18n="quoteCite">— Camille, coached depuis 2024</cite>
+</section>
+
+<section id="offres">
+  <div class="heading reveal">
+    <div class="eyebrow" data-i18n="offEyebrow">02 — Les offres</div>
+    <h2 data-i18n="offTitle">Choisissez votre rythme.</h2>
+    <p data-i18n="offSub">Sans engagement. Séance découverte offerte pour toute première inscription.</p>
+  </div>
+  <div class="offers">
+    <div class="offer reveal">
+      <div class="tag" data-i18n="off1tag">À la carte</div>
+      <h3 data-i18n="off1t">Séance découverte</h3>
+      <div class="price">0 €</div>
+      <small style="color:var(--muted)" data-i18n="off1s">Première séance offerte</small>
+      <ul>
+        <li data-i18n="off1i1">Bilan complet &amp; discussion objectifs</li>
+        <li data-i18n="off1i2">Une séance d'entraînement</li>
+        <li data-i18n="off1i3">Recommandations personnalisées</li>
+        <li data-i18n="off1i4">En présentiel ou en visio</li>
+      </ul>
+      <a href="#rdv" class="btn ghost" data-i18n="btnBook">Réserver</a>
+    </div>
+    <div class="offer featured reveal">
+      <div class="tag" data-i18n="off2tag">Le plus choisi</div>
+      <h3 data-i18n="off2t">Coaching mensuel</h3>
+      <div class="price">290 € <small data-i18n="perMonth">/ mois</small></div>
+      <small style="color:var(--muted)" data-i18n="off2s">8 séances incluses</small>
+      <ul>
+        <li data-i18n="off2i1">2 séances par semaine avec le coach</li>
+        <li data-i18n="off2i2">Programme personnalisé complet</li>
+        <li data-i18n="off2i3">Suivi nutrition &amp; plan de repas</li>
+        <li data-i18n="off2i4">Bilan de progression mensuel</li>
+        <li data-i18n="off2i5">Support WhatsApp 7j/7</li>
+      </ul>
+      <a href="#rdv" class="btn" data-i18n="btnStart">Commencer</a>
+    </div>
+    <div class="offer reveal">
+      <div class="tag">Premium</div>
+      <h3 data-i18n="off3t">Transformation 3 mois</h3>
+      <div class="price">790 € <small data-i18n="per3m">/ 3 mois</small></div>
+      <small style="color:var(--muted)" data-i18n="off3s">Programme intensif</small>
+      <ul>
+        <li data-i18n="off3i1">36 séances encadrées</li>
+        <li data-i18n="off3i2">Plan nutrition détaillé</li>
+        <li data-i18n="off3i3">Analyses corporelles mensuelles</li>
+        <li data-i18n="off3i4">Disponibilité prioritaire</li>
+      </ul>
+      <a href="#rdv" class="btn ghost" data-i18n="btnStart">Commencer</a>
+    </div>
+  </div>
+</section>
+
+<section id="rdv">
+  <div class="heading reveal">
+    <div class="eyebrow" data-i18n="rdvEyebrow">03 — Prendre rendez-vous</div>
+    <h2 data-i18n="rdvTitle">Le premier pas est le plus simple.</h2>
+    <p data-i18n="rdvSub">Laissez-moi un message, je reviens vers vous sous 24 h pour construire votre plan.</p>
+  </div>
+  <div class="rdv-wrap reveal">
+    <form class="rdv" id="rdvForm">
+      <input class="half" type="text" id="fName" placeholder="Votre nom" required>
+      <input class="half" type="email" id="fEmail" placeholder="Votre email" required>
+      <select class="full" id="fGoal" required>
+        <option value="" disabled selected data-i18n="goalPh">Votre objectif</option>
+        <option data-i18n="goal1">Perte de poids</option>
+        <option data-i18n="goal2">Prise de masse</option>
+        <option data-i18n="goal3">Remise en forme</option>
+        <option data-i18n="goal4">Préparation compétition</option>
+      </select>
+      <textarea class="full" id="fMsg" placeholder="Parlez-moi de vous : niveau, disponibilités, contraintes…"></textarea>
+      <button type="submit" class="btn full" data-i18n="send">Envoyer ma demande</button>
+      <p class="form-note" data-i18n="formNote">Séance découverte offerte, sans engagement.</p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <span data-i18n="foot1">Co.tch — Coach sportif certifié · Paris &amp; en ligne</span><br>
+  <a href="#hero" data-i18n="foot2">Retour en haut</a> · © 2026 Co.tch. <span data-i18n="foot3">Tous droits réservés.</span>
+</footer>
+
+<script>
+  /* ---------- i18n ---------- */
+  const I18N = {
+    fr: {},
+    en: {
+      nav1: "01. My services",
+      nav2: "02. Plans & pricing",
+      nav3: "03. Book a session",
+      navCta: "Book now",
+      heroEyebrow: "Personal coaching · Paris & online",
+      heroTitle1: "Push your limits.",
+      heroTitle2: "Your body follows.",
+      heroSub: "Tailored coaching designed around your goals, your schedule and your level. With you, every single session.",
+      heroLink1: "Explore the plans",
+      heroLink2: "Book a free discovery session",
+      stat1: "7 yrs",
+      stat1l: "of experience",
+      stat2l: "clients coached",
+      stat3l: "of goals reached",
+      actEyebrow: "01 — My services",
+      actTitle: "One coach. Three pillars.",
+      actSub: "Program, tracking and motivation: everything is built around you — not the other way around.",
+      card1t: "Training",
+      card1p: "Fully personalized sessions: strength, cardio, mobility. Every movement has a purpose, every session a measurable goal.",
+      card2t: "Nutrition",
+      card2p: "Simple, sustainable nutrition habits. No extreme diets — just habits you can keep, that fuel your performance.",
+      card3t: "Tracking & data",
+      card3p: "Regular progress reviews: strength, endurance, body composition. Your results, measured — never guessed.",
+      quote: "“I lost 12 kilos in six months, never feeling alone. Every session is calibrated, every bit of progress is seen.”",
+      quoteCite: "— Camille, coached since 2024",
+      offEyebrow: "02 — Plans & pricing",
+      offTitle: "Pick your pace.",
+      offSub: "No commitment. Free discovery session with every first signup.",
+      off1tag: "Pay as you go",
+      off1t: "Discovery session",
+      off1s: "First session free",
+      off1i1: "Full assessment & goal discussion",
+      off1i2: "One training session",
+      off1i3: "Personalized recommendations",
+      off1i4: "In person or online",
+      off2tag: "Most popular",
+      off2t: "Monthly coaching",
+      perMonth: "/ month",
+      off2s: "8 sessions included",
+      off2i1: "2 sessions per week with your coach",
+      off2i2: "Complete personalized program",
+      off2i3: "Nutrition tracking & meal plan",
+      off2i4: "Monthly progress review",
+      off2i5: "WhatsApp support 7 days a week",
+      off3t: "3-month transformation",
+      per3m: "/ 3 months",
+      off3s: "Intensive program",
+      off3i1: "36 coached sessions",
+      off3i2: "Detailed nutrition plan",
+      off3i3: "Monthly body composition analysis",
+      off3i4: "Priority availability",
+      btnBook: "Book",
+      btnStart: "Get started",
+      rdvEyebrow: "03 — Book a session",
+      rdvTitle: "The first step is the easiest one.",
+      rdvSub: "Drop me a message — I'll get back to you within 24 hours to build your plan.",
+      goalPh: "Your goal",
+      goal1: "Weight loss",
+      goal2: "Muscle gain",
+      goal3: "Getting back in shape",
+      goal4: "Competition prep",
+      send: "Send my request",
+      formNote: "Free discovery session, no commitment.",
+      successMsg: "Thank you! Your request has been sent. I'll reply within 24 h. 🏋️",
+      foot1: "Co.tch — Certified personal trainer · Paris & online",
+      foot2: "Back to top",
+      foot3: "All rights reserved."
+    }
+  };
+  // Capture the French text as default dictionary
+  document.querySelectorAll('[data-i18n]').forEach(el => { I18N.fr[el.dataset.i18n] = el.innerHTML; });
+
+  function setLang(lang) {
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.dataset.i18n;
+      const dict = I18N[lang] || I18N.fr;
+      if (dict[key] !== undefined) el.innerHTML = dict[key];
+    });
+    document.getElementById('langFr').classList.toggle('active', lang === 'fr');
+    document.getElementById('langEn').classList.toggle('active', lang === 'en');
+    // placeholders are not data-i18n nodes
+    document.getElementById('fName').placeholder = lang === 'en' ? 'Your name' : 'Votre nom';
+    document.getElementById('fEmail').placeholder = lang === 'en' ? 'Your email' : 'Votre email';
+    document.getElementById('fMsg').placeholder = lang === 'en'
+      ? 'Tell me about yourself: level, availability, constraints…'
+      : 'Parlez-moi de vous : niveau, disponibilités, contraintes…';
+    window.currentLang = lang;
+  }
+  setLang('fr');
+
+  /* ---------- Form ---------- */
+  document.getElementById('rdvForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const lang = window.currentLang || 'fr';
+    const msg = lang === 'en' ? I18N.en.successMsg : 'Merci ! Votre demande est envoyée. Je vous réponds sous 24 h. 🏋️';
+    const p = document.createElement('p');
+    p.className = 'success';
+    p.textContent = msg;
+    this.replaceChildren(p);
+  });
+
+  /* ---------- Menu mobile ---------- */
+  function toggleMenu() {
+    document.getElementById('burger').classList.toggle('open');
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+
+  /* ---------- Reveal on scroll ---------- */
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach((el, i) => {
+    el.style.transitionDelay = (i % 3) * 90 + 'ms';
+    io.observe(el);
+  });
+</script>
+</body>
+</html>
